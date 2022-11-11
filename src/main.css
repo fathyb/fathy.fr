@@ -1,0 +1,31 @@
+@font-face {
+    font-family: Virgil;
+    src: url('./generated/Virgil.woff2');
+}
+
+@font-face {
+    font-family: Janna LT Regular;
+    src: url('./assets/Janna LT Regular.ttf');
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+}
+
+body {
+    color-scheme: dark;
+    background-color: #020307;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+    -moz-font-feature-settings: 'liga' on;
+}
+
+code {
+    font-family: Inconsolata, Monaco, Consolas, Courier New, Courier, monospace;
+}

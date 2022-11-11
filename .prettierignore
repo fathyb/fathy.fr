@@ -1,0 +1,14 @@
+.DS_Store
+.gitignore
+.prettierignore
+*.jpg
+*.gif
+*.png
+*.ttf
+*.woff2
+yarn.lock
+
+/node_modules
+/build
+/scripts/_headers
+/src/posts/*/preview.mdx

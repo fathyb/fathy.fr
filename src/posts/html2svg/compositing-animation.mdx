@@ -1,0 +1,8 @@
+```cpp
+text = main.onCreateDevice()
+text.drawText("chocolatine", 0, 0)
+gradient = main.onCreateDevice()
+gradient.drawRect(0, 0, 500, 150)
+text.drawDevice(gradient, SkBlendMode::DstIn)
+main.drawDevice(text, SkBlendMode::Over)
+```

@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "jsx": "react-jsx",
+        "lib": ["dom", "es2022"],
+        "types": ["node", "mdx"],
+        "module": "ESNext",
+        "strict": true,
+        "target": "es2022",
+        "outDir": "build",
+        "rootDir": "src",
+        "sourceMap": true,
+        "incremental": true,
+        "declaration": false,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "tsBuildInfoFile": "build/tsconfig.tsbuildinfo",
+        "strictNullChecks": true,
+        "moduleResolution": "node",
+        "resolveJsonModule": true,
+        "preserveWatchOutput": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true
+    },
+    "include": ["src/**/*.ts", "src/**/*.tsx"]
+}

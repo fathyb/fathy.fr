@@ -9,7 +9,9 @@ export function Footer({ githubEditPath }: { githubEditPath: string }) {
     return (
         <Link
             external
-            to={'https://github.com/fathyb/website/blob/main/' + githubEditPath}
+            to={
+                'https://github.com/fathyb/fathy.fr/blob/main/' + githubEditPath
+            }
             sx={{
                 display: 'inline-flex',
                 flexDirection: 'row',

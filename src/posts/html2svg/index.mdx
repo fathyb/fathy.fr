@@ -2,9 +2,7 @@
 
 > November 11th 2022
 
-I've been working on a program called [`html2svg`](https://github.com/fathyb/html2svg), it converts web pages to SVG. It's based on a fork of Chromium to support modern web standards.
-
-I'll explain most patches in this post. We'll look into Chrome, v8, Skia, HarfBuzz, the TTF file format, and we'll even push improvements and fixes to Skia.
+I've been working on a program called [`html2svg`](https://github.com/fathyb/html2svg), it converts web pages to SVG. It's based on a fork of Chromium to support modern web standards. This post explains most patches.
 
 ## Take a picture
 
@@ -373,9 +371,9 @@ We need to add some code to handle the `maskFilter` property of `SkPaint`, it co
 
 The clipping code had to be refactored because shadows extend outside of standard clipping bounds, but we'll skip it as it is involved.
 
-## Support `<canvas>`
+## Vectorize `<canvas>`
 
-What if we could also vectorize `<canvas>` elements controlled by JavaScript? Turns out, Chromium has this capability built-in for printing:
+What if we could also vectorize 2D `<canvas>` elements controlled by JavaScript? Turns out, Chromium has this capability built-in for printing:
 
 ```cpp chromium/third_party/blink/renderer/core/html/canvas/html_canvas_element.cc#918-928@8144ef3b4466ffe072e838c175adb73dd2d7c349
 // For 2D Canvas, there are two ways of render Canvas for printing:

@@ -256,7 +256,7 @@ const useClasses = makeStyles()((theme) => ({
             textAlign: 'center',
 
             img: {
-                maxWidth: theme.spacing(50),
+                maxWidth: `min(100%, ${theme.spacing(50)})`,
             },
         },
 

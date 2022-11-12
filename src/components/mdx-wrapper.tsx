@@ -251,8 +251,9 @@ const useClasses = makeStyles()((theme) => ({
         },
 
         '.img-link': {
-            margin: theme.spacing(1),
-            display: 'inline-block',
+            margin: `${theme.spacing(2)} auto`,
+            display: 'block',
+            textAlign: 'center',
 
             img: {
                 maxWidth: theme.spacing(50),
@@ -267,10 +268,31 @@ const useClasses = makeStyles()((theme) => ({
 
         table: {
             margin: 'auto',
+            display: 'block',
+            maxWidth: '100%',
         },
 
-        td: {
+        'tbody, thead': {
+            display: 'flex',
+            width: '100%',
+            maxWidth: '100%',
+            flexDirection: 'column',
+        },
+
+        tr: {
+            display: 'flex',
+            alignItems: 'center',
+            flexDirection: 'row',
+            justifyContent: 'center',
+        },
+
+        'td, th': {
+            flex: 1,
             textAlign: 'center',
+
+            img: {
+                width: '100%',
+            },
         },
 
         blockquote: {
@@ -382,6 +404,8 @@ const useClasses = makeStyles()((theme) => ({
         '&>:not(.toc-wrapper, .mdx-footer, h1, h2, h3, h4, h5, h6) svg, &>svg':
             {
                 height: 'auto',
+                margin: 'auto',
+                display: 'block',
                 maxWidth: '100%',
                 marginBottom: theme.spacing(4),
             },

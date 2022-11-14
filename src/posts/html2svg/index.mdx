@@ -14,7 +14,7 @@ Blink consumes the HTML input, and Skia produces the graphical output. The Chrom
 
 In order to support multiple platforms and targets, Skia is built to render into a back-end: it could be its GPU renderer called Ganesh, its software rasterizer, or even a PDF file. This is how Chromium can work with or without a GPU and export web pages to PDF files with high fidelity.
 
-Recently, an experimental SVG back-end has been added to Skia. We're going to use this to build `html2svg`.
+Skia also has an experimental SVG back-end, and that's what we're going to use this to build `html2svg`!
 
 To get started, we'll need to find a way to render the page into an SVG canvas and expose it under a JS API.
 
@@ -198,7 +198,7 @@ auto* bytes = new char[size];
 
 Better, but the text is rendered with a serif font and has weird kerning.
 
-The serif font is caused by the SVG doesn't embed custom fonts, we can fix that by adding a fallback to the [`font-family`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family) attribute of [`<text>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/text) elements:
+The serif font is caused by missing fonts, we can fix that by adding a fallback to the [`font-family`](https://developer.mozilla.org/en-US/docs/Web/CSS/font-family) attribute of [`<text>`](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/text) elements:
 
 ```patch chromium/third_party/skia/src/svg/SkSVGDevice.cpp#715-717@5418c20495270e7a485407a1018787cb7716a605
 - if (!familyName.isEmpty()) {
@@ -240,7 +240,7 @@ So the `T` letter is missing from twitter.com, just the `T` letter. Hmm okay wei
 1. Blink loads fonts from the system or remotely and maps them into the [`SkTypeface`](https://source.chromium.org/chromium/chromium/src/+/main:third_party/skia/include/core/SkTypeface.h;drc=2562144c11c0b6bb8693e7565842384b5f05f36f;l=50) class
 2. [`SkTypeface`](https://source.chromium.org/chromium/chromium/src/+/main:third_party/skia/include/core/SkTypeface.h;drc=2562144c11c0b6bb8693e7565842384b5f05f36f;l=50) uses a font back-end internally: [`CoreText`](https://developer.apple.com/documentation/coretext) for macOS, [`DirectWrite`](https://learn.microsoft.com/en-us/windows/win32/directwrite/direct-write-portal) for Windows, and [`FreeType`](https://freetype.org) for Linux.
 3. The font back-end parses raw font files and exports an array of supported UTF-32 code points and their vectorial representations, the position in the array is called the glyph ID.
-4. Blink passes the text to [HarfBuzz](https://harfbuzz.github.io) which returns a set of glyph IDs and their relative positions, theses are passed to Skia which will picks the vectorial data and render it.
+4. Blink passes the text to [HarfBuzz](https://harfbuzz.github.io) which returns a set of glyph IDs and their relative positions, they're passed to Skia which picks the vectorial data and render it.
 
 Step 4 is needed to support ligatures and some languages. Arabic characters for example, have to be rendered differently based on their position in a word. This is why HarfBuzz is between Blink and Skia: it shapes a string of unicode characters into a set of glyph IDs and their positions.
 

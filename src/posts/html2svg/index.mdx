@@ -14,7 +14,7 @@ Blink consumes the HTML input, and Skia produces the graphical output. The Chrom
 
 In order to support multiple platforms and targets, Skia is built to render into a back-end: it could be its GPU renderer called Ganesh, its software rasterizer, or even a PDF file. This is how Chromium can work with or without a GPU and export web pages to PDF files with high fidelity.
 
-Skia also has an experimental SVG back-end, and that's what we're going to use this to build `html2svg`!
+Skia also has an experimental SVG back-end, and that's what we're going to use to build `html2svg`!
 
 To get started, we'll need to find a way to render the page into an SVG canvas and expose it under a JS API.
 

@@ -20,14 +20,14 @@ const y =
         ? 'y' // Firefox doesn't render diacritics correctly
         : 'ȳ'
 const fātḥȳ = [
-    `fātḥ${y}`,
-    `f ātḥ${y}`,
-    `f ā tḥ${y}`,
-    `f ā t ḥ${y}`,
-    `f ā t ḥ ${y}`,
-    `f ā t ḥ${y}`,
-    `f ā tḥ${y}`,
-    `f ātḥ${y}`,
+    `fātḥȳ`,
+    `f ātḥȳ`,
+    `f ā tḥȳ`,
+    `f ā t ḥȳ`,
+    `f ā t ḥ ȳ`,
+    `f ā t ḥȳ`,
+    `f ā tḥȳ`,
+    `f ātḥȳ`,
 ]
 
 export function LigaturesAnimation() {
@@ -59,7 +59,7 @@ export function LigaturesAnimation() {
                         i === 0 ? "'Plus Jakarta Sans'" : 'Janna LT Regular'
                     }
                 >
-                    {words[index]}
+                    {words[index].replace('ȳ', y)}
                 </ResponsiveText>
             ))}
         </Box>

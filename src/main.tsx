@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { StrictMode, useEffect } from 'react'
 import { createRoot, hydrateRoot } from 'react-dom/client'
 
 import { App } from './components/app'
@@ -7,12 +7,16 @@ import { RouterProvider } from './providers/router-provider'
 
 const { root, hydrate } = getRoot()
 const app = (
-    <RouterProvider>
-        <StyleProvider>
-            <App />
-            <UnmountStaticStyles />
-        </StyleProvider>
-    </RouterProvider>
+    <>
+        <StrictMode>
+            <RouterProvider>
+                <StyleProvider>
+                    <App />
+                    <UnmountStaticStyles />
+                </StyleProvider>
+            </RouterProvider>
+        </StrictMode>
+    </>
 )
 
 if (hydrate) {

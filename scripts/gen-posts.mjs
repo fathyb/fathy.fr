@@ -42,11 +42,15 @@ const posts = await Promise.all(
         }),
 )
 
-const chunks = posts.map(
-    (post) => `
+const hidden = [] //['every-sin']
+const chunks = posts.map((post) => {
+    const slug = post.file.replace(/\.mdx?$/, '')
+
+    return `
         {
-            path: ${JSON.stringify('/' + post.file.replace(/\.mdx?$/, ''))},
+            path: ${JSON.stringify('/' + slug)},
             title: ${JSON.stringify(post.title)},
+            hidden: ${hidden.includes(slug)},
             post: lazy(() =>
                 import(${JSON.stringify(
                     path.join('../posts', post.file, 'index.mdx'),
@@ -58,8 +62,8 @@ const chunks = posts.map(
                 )})
             )
         }
-    `,
-)
+    `
+})
 const generatedDir = path.join(rootDir, '../src/generated')
 
 await fs.mkdir(generatedDir, { recursive: true })
@@ -68,7 +72,7 @@ await fs.writeFile(
     [
         `import { lazy } from 'react'`,
         'export const posts = [',
-        ...chunks,
+        chunks.join(',\n'),
         ']',
     ].join('\n'),
 )

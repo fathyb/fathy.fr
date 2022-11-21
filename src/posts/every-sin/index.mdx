@@ -1,0 +1,129 @@
+# Every thing is a sin()
+
+> December 1st 2022 - **Draft**
+
+What do heat transfer, music, SVG, and Wi-Fi have in common? In 1807 Fourier wrote "Treatise on the propagation of heat in solid bodies" and it made a lot nerds happy.
+
+In this post I'm going to try to explain the relation between both from the perspective of a developper who doesn't really understand mathematics.
+
+## Inanimate carbon rod
+
+Take a rod, make the middle very hot, and toggle infrared vision.
+
+import GlowingRod from './glowing-rod'
+
+<GlowingRod />
+
+Put the relative temperature over the x axis in a graph:
+
+import HeatGraph from './heat-graph'
+
+<HeatGraph />
+
+Oh look a perfect sine wave. Let's measure the rod temperature while it cools off:
+
+import { Box } from '@mui/material'
+import ThreeDeeHeatGraph from './3d-heat-graph'
+
+<Box display="flex" flexDirection="row">
+    <GlowingRod cool />
+    <HeatGraph cool />
+</Box>
+<ThreeDeeHeatGraph />
+
+Fourier found that for a perfect sine wave like ours, we can compute the temperature over time using the following formula:
+
+```js
+const ω = 1 // wave angle
+const k = 1 // conductivity
+
+function rodTemperature(x, time) {
+    return Math.cos(x * ω) * Math.E ** (-k * ω ** 2 * time)
+}
+```
+
+Now here is what happens if we make contact between a hot rod and a cold rod:
+
+import ContactRod from './contact-rod'
+
+<Box display="flex" flexDirection="row">
+    <ContactRod cool model="contact" />
+    <HeatGraph cool model="contact" delay={0.1} />
+</Box>
+<ThreeDeeHeatGraph model="contact" delay={0.1} />
+
+How can we compute the heat flow in this case? We know how to do it with a `sin` function, but what we have here is a square wave.
+
+## Fourier series
+
+Let's put the rods down and pull some fairly standard electronic music production gear: an oscillator, an oscilloscope, and a spectrum analyzer.
+
+import Oscilloscope from './oscilloscope'
+
+<Oscilloscope />
+
+The numbers on the spectrum analyzer are called harmonics:
+
+-   the first harmonic, also called the fundamental, equals `frequency * 1`
+-   the second, also called the octave, equals `frequency * 2`
+-   the third equals `frequency * 3`
+-   and so on..
+
+What we're seeing is called an FFT: a Fast Fourier Transform, a decomposition of a wave into a sum of sine waves, and it tells us two important things:
+
+-   a sine wave only has one harmonic: itself
+-   a square wave only has odd harmonics decreasing exponentially
+
+With that in mind, we can decompose our square wave and compute heat diffusion using our simple sine formula.
+
+## WebAudio
+
+What does it look like in practice? Let's use the WebAudio API to construct a square wave using sine waves:
+
+```js
+// An offline context doesn't need access to speakers
+const ctx = new OfflineAudioContext({
+    length: 2048,
+    sampleRate: 44100,
+    numberOfChannels: 1,
+})
+// Create an analyser to read FFT data
+const analyser = ctx.createAnalyser()
+// Let's start with 8 harmonics
+const harmonics = 8
+// We want of square wave of 440 Hz
+const frequency = 440
+
+for (let i = 1; i <= harmonics; i++) {
+    // We only want odd harmonics
+    if (i % 2 === 0) {
+        continue
+    }
+
+    // Create a gain to control the amplitude of the sin wave
+    const gain = ctx.createGain()
+    // Create an oscillator to generate a sine wave
+    const oscillator = ctx.createOscillator()
+
+    // Set an exponential amplitude
+    gain.gain.value = 1 / i
+    // Generate a sine wave
+    oscillator.type = 'sine'
+    // Set the harmonic frequency
+    oscillator.frequency.setValueAtTime(frequency * i, ctx.currentTime)
+
+    // Pipe the oscillator to the gain
+    oscillator.connect(gain)
+    // Pipe the gain to the FFT
+    gain.connect(analyser)
+}
+
+// Compute
+await ctx.startRendering()
+```
+
+Let's plug this into our instruments and add a slider for the `harmonics` variable:
+
+<Oscilloscope model="compose" />
+
+Now let's combine this with the heat equation:

@@ -94,7 +94,7 @@ export default ({ generator, prod = false }) => {
         module: {
             rules: [
                 {
-                    test: /\.(jpg)|(png)|(gif)|(ttf)|(woff2?)$/i,
+                    test: /\.(dat)|(jpg)|(png)|(gif)|(ttf)|(woff2?)$/i,
                     type: 'asset/resource',
                 },
                 {

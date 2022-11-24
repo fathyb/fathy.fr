@@ -1,34 +1,54 @@
 import { Box } from '@mui/material'
-import { Canvas } from '@react-three/fiber'
 
-import { HeatShaderModel, useHeatShader } from './heat-shader'
+import { SharedCanvas } from './shared-renderer'
+import { HeatShaderModel, ShaderUniforms, useHeatShader } from './heat-shader'
+import { useStatic } from '../../hooks/use-static'
+import { OrthographicCamera } from 'three'
 
 export interface Props {
     cool?: boolean
     delay?: number
     model?: HeatShaderModel
+    uniforms?: ShaderUniforms
 }
 
 export default function HeatGraph(props: Props) {
+    const camera = useStatic(() => {
+        const camera = new OrthographicCamera(
+            -1, // left
+            1, // right
+            1, // top
+            -1, // bottom
+            -1, // near,
+            1, // far
+        )
+
+        camera.zoom = 40
+        camera.position.set(0, 0, 0)
+
+        return camera
+    })
+
     return (
         <Box width="100%" height={250}>
-            <Canvas>
+            <SharedCanvas camera={camera}>
                 <Scene {...props} />
-            </Canvas>
+            </SharedCanvas>
         </Box>
     )
 }
 
-function Scene({ cool, model, delay }: Props) {
+function Scene({ cool, model, delay, uniforms }: Props) {
     const shader = useHeatShader({
         cool,
         model,
         delay,
+        uniforms,
         fragment: `
             void main() {
                 vec4 curve = heat(vUv.x);
                 float shape = smoothstep(
-                    1.0 - clamp(distance(0.925 * (1.0 - curve.w) + vUv.y-0.45, 0.5) * 1.0, 0.0, 1.0),
+                    1.0 - clamp(distance(0.925 * (1.0 - curve.w) + vUv.y - 0.45, 0.5) * 1.0, 0.0, 1.0),
                     1.0,
                     0.99
                 );
@@ -39,13 +59,9 @@ function Scene({ cool, model, delay }: Props) {
     })
 
     return (
-        <>
-            <perspectiveCamera fov={45} position={[0, 0, 0]}>
-                <mesh>
-                    <planeGeometry args={[10, 6]} />
-                    <shaderMaterial args={[shader.main]} />
-                </mesh>
-            </perspectiveCamera>
-        </>
+        <mesh position={[0, 0, 0]}>
+            <planeGeometry args={[10, 6]} />
+            <shaderMaterial args={[shader.main]} />
+        </mesh>
     )
 }

@@ -3,10 +3,11 @@
 import fs from 'fs/promises'
 import path from 'path'
 import remarkMdx from 'remark-mdx'
+import remarkMath from 'remark-math'
 import remarkParse from 'remark-parse'
 import { unified } from 'unified'
 
-const mdx = unified().use(remarkParse).use(remarkMdx)
+const mdx = unified().use(remarkParse).use(remarkMdx).use(remarkMath)
 const rootDir = path.dirname(new URL(import.meta.url).pathname)
 const postsDir = path.join(rootDir, '../src/posts')
 const files = await fs.readdir(postsDir, { withFileTypes: true })

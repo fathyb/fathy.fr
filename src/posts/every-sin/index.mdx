@@ -2,63 +2,80 @@
 
 > December 1st 2022 - **Draft**
 
-What do heat transfer, music, SVG, and Wi-Fi have in common? In 1807 Fourier wrote "Treatise on the propagation of heat in solid bodies" and it made a lot nerds happy.
+import { Box } from '@mui/material'
+import HeatGraph from './heat-graph'
+import ContactRod from './contact-rod'
+import GlowingRod from './glowing-rod'
+import HeatGraph3D from './heat-graph-3d'
+import Oscilloscope from './oscilloscope'
 
-In this post I'm going to try to explain the relation between both from the perspective of a developper who doesn't really understand mathematics.
+In this post I'm going to explain _Fourier series_ from the perspective of a developper who doesn't really understand mathematics.
+
+What do heat transfer, music, SVG, and Wi-Fi have in common? In 1807 Fourier wrote "_Treatise on the propagation of heat in solid bodies_" and it made a lot nerds happy.
 
 ## Inanimate carbon rod
 
-Take a rod, make the middle very hot, and toggle infrared vision.
+We'll start by looking at this rod with an infrared camera:
 
-import GlowingRod from './glowing-rod'
+<GlowingRod model="simple" />
 
-<GlowingRod />
+If we graph the temperature we get a beautifiul sine wave:
 
-Put the relative temperature over the x axis in a graph:
+<HeatGraph model="simple" />
 
-import HeatGraph from './heat-graph'
-
-<HeatGraph />
-
-Oh look a perfect sine wave. Let's measure the rod temperature while it cools off:
-
-import { Box } from '@mui/material'
-import ThreeDeeHeatGraph from './3d-heat-graph'
+Let's measure the rod temperature while it cools off:
 
 <Box display="flex" flexDirection="row">
-    <GlowingRod cool />
-    <HeatGraph cool />
+    <GlowingRod cool model="simple" />
+    <HeatGraph cool model="simple" />
 </Box>
-<ThreeDeeHeatGraph />
+<HeatGraph3D model="simple" />
 
-Fourier found that for a perfect sine wave like ours, we can compute the temperature over time using the following formula:
+import KatexStyles from './katex-styles'
 
-```js
-const ω = 1 // wave angle
-const k = 1 // conductivity
+<KatexStyles />
 
-function rodTemperature(x, time) {
-    return Math.cos(x * ω) * Math.E ** (-k * ω ** 2 * time)
+Fourier found that for a perfect sine wave like ours, we can get the temperature over time using this very simple formula: $\cos(\omega x)e^{-k\omega^2t}$. In the programming world we can translate this to the following code currently running on your GPU:
+
+```glsl
+float curve(float x, float t) {
+    float ω = 2 * π; // omega: adjust frequency
+    float k = 1; // conductivity: adjust how fast heat propagates
+
+    return cos(ω * x) * exp(-k * ω * ω * t);
 }
 ```
 
-Now here is what happens if we make contact between a hot rod and a cold rod:
+<HeatGraph3D model="simple" toolbox />
 
-import ContactRod from './contact-rod'
+Now here is what happens when we make contact between a hot rod and a cold rod:
 
 <Box display="flex" flexDirection="row">
-    <ContactRod cool model="contact" />
-    <HeatGraph cool model="contact" delay={0.1} />
+    <ContactRod cool model="contact" delay={0.2} />
+    <HeatGraph cool model="contact" delay={0.2} />
 </Box>
-<ThreeDeeHeatGraph model="contact" delay={0.1} />
+<HeatGraph3D model="contact" delay={0.2} />
 
-How can we compute the heat flow in this case? We know how to do it with a `sin` function, but what we have here is a square wave.
+How can we compute the heat flow in this case? We have a formula for sine waves, but what we have here is a square wave.
 
-## Fourier series
+## Hip to be square
 
-Let's put the rods down and pull some fairly standard electronic music production gear: an oscillator, an oscilloscope, and a spectrum analyzer.
+It's time for our musical break, here are two unrelated 5 seconds musical samples:
 
-import Oscilloscope from './oscilloscope'
+<Box display="flex" flexDirection="row" width="100%" textAlign="center">
+    <Box flex={1}>
+        <p>Chic - Good Times</p>
+    </Box>
+    <Box flex={1}>
+        <p>Bee Gees - More Than A Woman</p>
+    </Box>
+</Box>
+
+This level indicator tells us that the Chic song with the bass has a lot of low frequencies, and the Debussy piece with the flute has a lot of high frequencies. How does it do that?
+
+What it does is called an FFT: an Fast Fourier Transform, it computes which sine waves are contained in our signal in real-time. Fourier didn't just found how heat propagates on a perfect sine curve, he found how to decompose any function into a sum of infinite sine waves.
+
+Let's pull some fairly standard electronic music production gear: an oscillator, an oscilloscope, and a spectrum analyzer with an harmonics indicator.
 
 <Oscilloscope />
 
@@ -69,41 +86,29 @@ The numbers on the spectrum analyzer are called harmonics:
 -   the third equals `frequency * 3`
 -   and so on..
 
-What we're seeing is called an FFT: a Fast Fourier Transform, a decomposition of a wave into a sum of sine waves, and it tells us two important things:
+If you play with the oscillator a bit you will notice two important things:
 
 -   a sine wave only has one harmonic: itself
 -   a square wave only has odd harmonics decreasing exponentially
 
-With that in mind, we can decompose our square wave and compute heat diffusion using our simple sine formula.
-
-## WebAudio
-
-What does it look like in practice? Let's use the WebAudio API to construct a square wave using sine waves:
+Let's use the WebAudio API to construct a square wave using harmonics:
 
 ```js
 // An offline context doesn't need access to speakers
-const ctx = new OfflineAudioContext({
-    length: 2048,
-    sampleRate: 44100,
-    numberOfChannels: 1,
-})
+let ctx = new OfflineAudioContext(options)
 // Create an analyser to read FFT data
-const analyser = ctx.createAnalyser()
+let analyser = ctx.createAnalyser()
 // Let's start with 8 harmonics
-const harmonics = 8
+let harmonics = 8
 // We want of square wave of 440 Hz
-const frequency = 440
+let frequency = 440
 
-for (let i = 1; i <= harmonics; i++) {
-    // We only want odd harmonics
-    if (i % 2 === 0) {
-        continue
-    }
-
+// Loop over odd harmonics
+for (let i = 1; i <= harmonics; i += 2) {
     // Create a gain to control the amplitude of the sin wave
-    const gain = ctx.createGain()
+    let gain = ctx.createGain()
     // Create an oscillator to generate a sine wave
-    const oscillator = ctx.createOscillator()
+    let oscillator = ctx.createOscillator()
 
     // Set an exponential amplitude
     gain.gain.value = 1 / i
@@ -112,18 +117,53 @@ for (let i = 1; i <= harmonics; i++) {
     // Set the harmonic frequency
     oscillator.frequency.setValueAtTime(frequency * i, ctx.currentTime)
 
-    // Pipe the oscillator to the gain
+    // Harmonic 1: [ Oscillator ] => [ Gain ] =\
+    // Harmonic 2: [ Oscillator ] => [ Gain ] ==> [ Analyser ]
+    // Harmonic 3: [ Oscillator ] => [ Gain ] =/
     oscillator.connect(gain)
-    // Pipe the gain to the FFT
     gain.connect(analyser)
 }
-
-// Compute
-await ctx.startRendering()
 ```
 
 Let's plug this into our instruments and add a slider for the `harmonics` variable:
 
 <Oscilloscope model="compose" />
 
-Now let's combine this with the heat equation:
+You'll notice that nothing changes past the 50th harmonic. This is because our `AudioContext` is configured for human hearing, so it ignores frequencies higher than 22kHz, and `440 * 50 = 22_000`, and that means that at 50 harmonics, our square wave sounds exactly the same to human ear as a real square wave.
+
+## Shape of things to come
+
+We have everything needed to decompose a square wave into sine waves and compute heat diffusion using them. Let's update our code:
+
+```glsl
+float temperature(float x, float t) {
+    float ω = 2 * π; // omega: adjust frequency
+    float k = 1; // conductivity: adjust how fast heat propagates
+
+    return cos(ω * x) * exp(-k * ω * ω * t);
+}
+
+float curve(float x, float t) {
+    float h = 3.0; // harmonics
+    float c = 0.0; // sum of curves
+
+    // Loop over odd harmonics: 1, 3, 5, 7, ...
+    for (float i = 1.0; i <= h; i += 2.0) {
+        // add the temperature for the frequency multiplied by i,
+        // and the amplitude divided by i
+        c += temperature(x * i, t) / i;
+    }
+
+    return c;
+}
+```
+
+<HeatGraph3D model="simple" toolbox harmonics o={1} k={4} />
+
+You can notice that the lower the harmonics, the higher the interferences are at the contact. These also appear in the real world because nothing has unlimited bandwidth.
+
+## Astral projection
+
+But how do you make an FFT?
+
+Time to open our third eye and switch dimensions: instead of representing time as a plane we're going represent it in its true form, which as we all know is a flat circle.

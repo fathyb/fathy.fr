@@ -1,32 +1,40 @@
 import { Box } from '@mui/material'
 import { Mesh } from 'three'
 import { useRef } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
 
-import { HeatShaderModel, useHeatShader } from './heat-shader'
+import { useThreeFrame } from '../../hooks/use-three-frame'
+import { SharedCanvas } from './shared-renderer'
+import { HeatShaderModel, ShaderUniforms, useHeatShader } from './heat-shader'
 
 export interface Props {
     cool?: boolean
     model?: HeatShaderModel
+    uniforms?: ShaderUniforms
 }
 
 export default function GlowingRod(props: Props) {
     return (
         <Box width="100%" height={250}>
-            <Canvas>
+            <SharedCanvas>
                 <Scene {...props} />
-            </Canvas>
+            </SharedCanvas>
         </Box>
     )
 }
 
-function Scene({ cool, model }: Props) {
+function Scene({ cool, model, uniforms }: Props) {
     const mesh = useRef<Mesh>(null)
-    const shader = useHeatShader({ cool, model })
+    const shader = useHeatShader({
+        cool,
+        model,
+        uniforms,
+    })
 
-    useFrame(() => {
+    useThreeFrame((time) => {
         if (mesh.current) {
-            mesh.current.rotation.y += 0.01
+            mesh.current.rotation.y = ((time % 7500) / 7500) * Math.PI * 2
+
+            return true
         }
     })
 

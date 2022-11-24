@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 
-export function useLazy<T>(get: () => T) {
+export function useStatic<T>(get: () => T) {
     const ref = useRef<null | T>(null)
 
     if (!ref.current) {

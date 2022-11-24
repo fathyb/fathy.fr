@@ -30,7 +30,7 @@ export default function Oscilloscope({ type, model }: Props) {
         type: type ?? 'square',
         audio: null,
         model: model ?? 'toolbox',
-        frequency: 517,
+        frequency: model === 'compose' ? 440 : 517,
         harmonics: 8,
         gfx: { osc: null, fft: null },
     })
@@ -60,7 +60,7 @@ export default function Oscilloscope({ type, model }: Props) {
                         }}
                         onChange={(_, value) => {
                             if (typeof value === 'number' && ref.current) {
-                                ref.current.harmonics = Math.min(42, value)
+                                ref.current.harmonics = Math.min(50, value)
 
                                 render(ref.current)
                             }
@@ -181,11 +181,7 @@ function render(ref: Context) {
         oscillator.connect(gain)
         gain.connect(analyser)
     } else {
-        for (let i = 1; i <= ref.harmonics; i++) {
-            if (ref.type === 'square' && i % 2 === 0) {
-                continue
-            }
-
+        for (let i = 1; i <= ref.harmonics; i += 2) {
             const gain = ctx.createGain()
             const oscillator = ctx.createOscillator()
 

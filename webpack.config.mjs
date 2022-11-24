@@ -1,6 +1,8 @@
 import path from 'path'
 import module from 'module'
 import webpack from 'webpack'
+import RemarkMath from 'remark-math'
+import RehypeKatex from 'rehype-katex'
 import RemarkGfm from 'remark-gfm'
 import RehypeToc from '@jsdevtools/rehype-toc'
 import RehypeSlug from 'rehype-slug'
@@ -162,10 +164,12 @@ export default ({ generator, prod = false }) => {
                                 providerImportSource: '@mdx-js/react',
                                 remarkPlugins: [
                                     RemarkGfm,
+                                    RemarkMath,
                                     remarkMdxSvg,
                                     RemarkMdxImages,
                                 ],
                                 rehypePlugins: [
+                                    [RehypeKatex],
                                     [
                                         RehypePrism,
                                         {

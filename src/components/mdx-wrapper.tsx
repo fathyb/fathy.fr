@@ -11,6 +11,7 @@ import { useEffect, useRef, PropsWithChildren, Fragment } from 'react'
 import { Link } from './link'
 import { Sidebar } from './sidebar'
 import { useScrollListener } from '../hooks/use-scroll-listener'
+import { SharedCanvasProvider } from '../posts/every-sin/shared-renderer'
 
 export function MDXWrapper({
     children,
@@ -33,7 +34,11 @@ export function MDXWrapper({
             {...props}
         >
             <Box className={classes.content} component="main">
-                <MDXProvider components={components}>{children}</MDXProvider>
+                <SharedCanvasProvider>
+                    <MDXProvider components={components}>
+                        {children}
+                    </MDXProvider>
+                </SharedCanvasProvider>
             </Box>
         </Box>
     )
@@ -390,7 +395,7 @@ const useClasses = makeStyles()((theme) => ({
                 maxWidth: theme.spacing(125),
             },
         },
-        '& code, & ol, & ul, & strong': {
+        '& code, & ol, & ul, & strong, & span.math': {
             color: lighten(theme.palette.text.primary, 0.35),
         },
         '&>:not(.toc-wrapper, .mdx-footer) a, &>a, &>:not(.toc-wrapper, .mdx-footer) a *, &>a *':

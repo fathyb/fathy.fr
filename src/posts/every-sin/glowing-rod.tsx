@@ -46,11 +46,11 @@ function Scene({ cool, model, uniforms }: Props) {
                     <shaderMaterial attach="material-0" args={[shader.main]} />
                     <shaderMaterial
                         attach="material-1"
-                        args={[shader.topCap]}
+                        args={[shader.coldCap]}
                     />
                     <shaderMaterial
                         attach="material-2"
-                        args={[shader.bottomCap]}
+                        args={[shader.hotCap]}
                     />
                 </mesh>
             </perspectiveCamera>

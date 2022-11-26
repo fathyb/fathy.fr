@@ -130,7 +130,15 @@ export default function Oscilloscope({ type, model }: Props) {
                 </Box>
             )}
 
-            <Box>
+            <Box
+                sx={{
+                    flex: 1,
+
+                    canvas: {
+                        width: '100%',
+                    },
+                }}
+            >
                 <canvas
                     width={512}
                     height={256}

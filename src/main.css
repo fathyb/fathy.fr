@@ -8,8 +8,9 @@
     src: url('./assets/Janna LT Regular.ttf');
 }
 
-canvas {
-    /*border: 1px solid white;box-sizing: border-box;*/
+canvasd {
+    border: 1px solid white;
+    box-sizing: border-box;
 }
 
 html,

@@ -17,20 +17,25 @@ export interface Props {
     harmonics?: boolean
     o?: number
     k?: number
+    offset?: number
 }
 
 export default function HeatGraph3D(props: Omit<Props, 'camera'>) {
     const camera = useStatic(() => new PerspectiveCamera(45))
     const [uniforms, setUniforms] = useState(() => {
         const defaultUniforms = {
-            curve_o: {
+            offset: {
+                value: props.offset ?? (props.model === 'contact' ? 0.25 : 0),
+                hidden: true,
+            },
+            omega: {
                 max: 10,
                 name: 'ω',
                 desc: 'angle in radians',
                 value: props.o ?? (props.model === 'contact' ? 1 : 2),
                 angle: true,
             },
-            curve_k: {
+            conductivity: {
                 max: 8,
                 name: 'k',
                 desc: 'how fast heat propagates',
@@ -41,7 +46,7 @@ export default function HeatGraph3D(props: Omit<Props, 'camera'>) {
         return props.harmonics
             ? {
                   ...defaultUniforms,
-                  curve_harmonics: {
+                  harmonics: {
                       min: 1,
                       max: 128,
                       step: 1,
@@ -67,23 +72,24 @@ export default function HeatGraph3D(props: Omit<Props, 'camera'>) {
 
     return (
         <>
-            {'curve_harmonics' in uniforms ? (
+            {'harmonics' in uniforms ? (
                 <Box
                     display="flex"
                     flexDirection="row"
                     alignItems="center"
                     justifyContent="center"
+                    flexWrap="wrap"
                 >
                     <ContactRod
                         cool
                         delay={0.2}
-                        model={props.model}
+                        model="contact"
                         uniforms={uniforms}
                     />
                     <HeatGraph
                         cool
                         delay={0.2}
-                        model={props.model}
+                        model="contact"
                         uniforms={uniforms}
                     />
                 </Box>
@@ -94,61 +100,77 @@ export default function HeatGraph3D(props: Omit<Props, 'camera'>) {
                 flexDirection="row"
                 alignItems="center"
                 justifyContent="center"
+                flexWrap="wrap"
             >
                 {props.toolbox ? (
                     <Box flex={1}>
-                        {Object.entries(uniforms).map(([key, uniform]) => (
-                            <Fragment key={key}>
-                                <Box
-                                    px={2}
-                                    display="flex"
-                                    flexDirection="row"
-                                    justifyContent="space-between"
-                                    alignItems="center"
-                                >
-                                    <Typography
-                                        variant="body1"
-                                        component="span"
+                        {Object.entries(uniforms)
+                            .filter(([, uniform]) => {
+                                if ('hidden' in uniform && uniform.hidden) {
+                                    return false
+                                }
+
+                                return true
+                            })
+                            .map(([key, uniform]) => (
+                                <Fragment key={key}>
+                                    <Box
+                                        px={2}
+                                        display="flex"
+                                        flexDirection="row"
+                                        justifyContent="space-between"
+                                        alignItems="center"
                                     >
-                                        <Typography component="code">
-                                            {'name' in uniform
-                                                ? uniform.name
-                                                : key}
-                                        </Typography>
-                                        : {uniform.desc}
-                                    </Typography>
-                                    <Box>
                                         <Typography
                                             variant="body1"
                                             component="span"
                                         >
-                                            {Math.round(
-                                                ('map' in uniform
-                                                    ? uniform.map(uniform.value)
-                                                    : uniform.value) * 100,
-                                            ) / 100}
-                                            {'angle' in uniform &&
-                                            uniform.angle ? (
-                                                <Typography component="code">
-                                                    &nbsp;* π
-                                                </Typography>
-                                            ) : null}
+                                            <Typography component="code">
+                                                {'name' in uniform
+                                                    ? uniform.name
+                                                    : key}
+                                            </Typography>
+                                            :{' '}
+                                            {'desc' in uniform
+                                                ? uniform.desc
+                                                : null}
                                         </Typography>
+                                        <Box>
+                                            <Typography
+                                                variant="body1"
+                                                component="span"
+                                            >
+                                                {Math.round(
+                                                    ('map' in uniform
+                                                        ? uniform.map(
+                                                              uniform.value,
+                                                          )
+                                                        : uniform.value) * 100,
+                                                ) / 100}
+                                                {'angle' in uniform &&
+                                                uniform.angle ? (
+                                                    <Typography component="code">
+                                                        &nbsp;* π
+                                                    </Typography>
+                                                ) : null}
+                                            </Typography>
+                                        </Box>
                                     </Box>
-                                </Box>
-                                <Slider
-                                    min={0}
-                                    max={uniform.max}
-                                    step={
-                                        'step' in uniform ? uniform.step : 0.01
-                                    }
-                                    value={uniform.value}
-                                    onChange={change(
-                                        key as keyof typeof uniforms,
-                                    )}
-                                />
-                            </Fragment>
-                        ))}
+                                    <Slider
+                                        min={'min' in uniform ? uniform.min : 0}
+                                        max={'max' in uniform ? uniform.max : 0}
+                                        step={
+                                            'step' in uniform
+                                                ? uniform.step
+                                                : 0.01
+                                        }
+                                        value={uniform.value}
+                                        onChange={change(
+                                            key as keyof typeof uniforms,
+                                        )}
+                                    />
+                                </Fragment>
+                            ))}
                     </Box>
                 ) : null}
                 <Box height={300} flex={1}>
@@ -160,6 +182,9 @@ export default function HeatGraph3D(props: Omit<Props, 'camera'>) {
         </>
     )
 }
+
+const spread = 1 / 3
+const resolution = 11
 
 function Scene({
     camera,
@@ -173,12 +198,11 @@ function Scene({
     const shader = useHeatShader({
         model,
         delay,
-        fragment,
         uniforms,
+        fragment,
         cool: true,
         rewind: !toolbox,
     })
-    const resolution = 16
     const shaders = useStatic(() =>
         Array(resolution)
             .fill(0)
@@ -186,7 +210,15 @@ function Scene({
                 shader.extend({
                     fragment,
                     uniforms: {
-                        time: { value: i * (1 / resolution) },
+                        phaseAnimation: { value: toolbox ? 1 : 0 },
+                        selectDepth: {
+                            value:
+                                i === 0
+                                    ? 0
+                                    : 1 -
+                                      (spread ** (i / resolution) - 1) /
+                                          (spread - 1),
+                        },
                     },
                 }),
             ),
@@ -206,23 +238,8 @@ function Scene({
             mesh.current.position.z = time * -15
         }
 
-        for (let i = 0; i < shaders.length; i++) {
-            const { uniforms } = shaders[i]
-
-            if (toolbox) {
-                uniforms.curve_phase.value = shader.time.value * (1 / Math.PI)
-            }
-
-            if (toolbox || uniforms.time.value <= shader.time.value) {
-                uniforms.opacity.value =
-                    (1 - (i + 1) / shaders.length) * (i % 2 === 0 ? 1 : 0.5)
-            } else {
-                uniforms.opacity.value = 0
-            }
-        }
-
         camera.lookAt(0, 0, -5)
-        camera.position.set(15, 5, 2)
+        camera.position.set(15, 6, 2)
 
         return true
     })
@@ -238,7 +255,7 @@ function Scene({
             {shaders.map((shader, i) => (
                 <mesh
                     key={i}
-                    position={[0, 0, shader.uniforms.time.value * -15]}
+                    position={[0, 0, shader.uniforms.selectDepth.value * -15]}
                 >
                     <planeGeometry args={[10, 7]} />
                     <shaderMaterial args={[shader]} transparent />
@@ -257,6 +274,6 @@ const fragment = `
             0.99
         );
 
-        gl_FragColor = (1.0 - shape) * vec4(value.rgb, 1.0 * opacity);
+        gl_FragColor = (1.0 - shape) * vec4(value.rgb, getOpacity());
     }
 `

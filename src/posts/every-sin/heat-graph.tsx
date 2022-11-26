@@ -1,9 +1,9 @@
 import { Box } from '@mui/material'
+import { OrthographicCamera } from 'three'
 
+import { useStatic } from '../../hooks/use-static'
 import { SharedCanvas } from './shared-renderer'
 import { HeatShaderModel, ShaderUniforms, useHeatShader } from './heat-shader'
-import { useStatic } from '../../hooks/use-static'
-import { OrthographicCamera } from 'three'
 
 export interface Props {
     cool?: boolean
@@ -14,14 +14,7 @@ export interface Props {
 
 export default function HeatGraph(props: Props) {
     const camera = useStatic(() => {
-        const camera = new OrthographicCamera(
-            -1, // left
-            1, // right
-            1, // top
-            -1, // bottom
-            -1, // near,
-            1, // far
-        )
+        const camera = new OrthographicCamera(-1, 1, 1, -1, -1, 1)
 
         camera.zoom = 40
         camera.position.set(0, 0, 0)

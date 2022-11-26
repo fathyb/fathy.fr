@@ -12,8 +12,11 @@
         "build:gen:posts": "scripts/gen-posts.mjs",
         "build:generator": "webpack --env prod --env generator",
         "build:web": "webpack --env prod",
-        "build:pages": "node build/bundle/generator/prod/main",
+        "build:pages": "node --enable-source-maps build/bundle/generator/prod/main",
         "deploy": "wrangler pages publish build/bundle/web/prod --commit-dirty=true"
+    },
+    "resolutions": {
+        "three": "^0.146.0"
     },
     "dependencies": {
         "@emotion/react": "^11.10.5",

@@ -8,8 +8,9 @@ import ContactRod from './contact-rod'
 import GlowingRod from './glowing-rod'
 import HeatGraph3D from './heat-graph-3d'
 import Oscilloscope from './oscilloscope'
+import WindingGraph3D from './winding-graph-3d'
 
-In this post I'm going to explain _Fourier series_ from the perspective of a developper who doesn't really understand mathematics.
+In this second blog post I'm going to explain _Fourier series_ from the perspective of a developper who doesn't really understand mathematics.
 
 What do heat transfer, music, SVG, and Wi-Fi have in common? In 1807 Fourier wrote "_Treatise on the propagation of heat in solid bodies_" and it made a lot nerds happy.
 
@@ -25,7 +26,7 @@ If we graph the temperature we get a beautifiul sine wave:
 
 Let's measure the rod temperature while it cools off:
 
-<Box display="flex" flexDirection="row">
+<Box display="flex" flexDirection="row" flexWrap="wrap">
     <GlowingRod cool model="simple" />
     <HeatGraph cool model="simple" />
 </Box>
@@ -35,14 +36,18 @@ import KatexStyles from './katex-styles'
 
 <KatexStyles />
 
-Fourier found that for a perfect sine wave like ours, we can get the temperature over time using this very simple formula: $\cos(\omega x)e^{-k\omega^2t}$. In the programming world we can translate this to the following code currently running on your GPU:
+Fourier found that for a perfect sine wave like ours, we can get the temperature over time using this formula:
+
+> $\cos(\omega x)e^{-k\omega^2t}$
+
+In the programming world we can translate this to the following code currently running on your graphic card:
 
 ```glsl
 float curve(float x, float t) {
-    float ω = 2 * π; // omega: adjust frequency
+    float o = 2 * pi; // omega: adjust frequency
     float k = 1; // conductivity: adjust how fast heat propagates
 
-    return cos(ω * x) * exp(-k * ω * ω * t);
+    return cos(o * x) * exp(-k * o * o * t);
 }
 ```
 
@@ -50,7 +55,7 @@ float curve(float x, float t) {
 
 Now here is what happens when we make contact between a hot rod and a cold rod:
 
-<Box display="flex" flexDirection="row">
+<Box display="flex" flexDirection="row" flexWrap="wrap">
     <ContactRod cool model="contact" delay={0.2} />
     <HeatGraph cool model="contact" delay={0.2} />
 </Box>
@@ -137,10 +142,10 @@ We have everything needed to decompose a square wave into sine waves and compute
 
 ```glsl
 float temperature(float x, float t) {
-    float ω = 2 * π; // omega: adjust frequency
+    float o = 2 * pi; // omega: adjust frequency
     float k = 1; // conductivity: adjust how fast heat propagates
 
-    return cos(ω * x) * exp(-k * ω * ω * t);
+    return cos(o * x) * exp(-k * o * o * t);
 }
 
 float curve(float x, float t) {
@@ -149,8 +154,7 @@ float curve(float x, float t) {
 
     // Loop over odd harmonics: 1, 3, 5, 7, ...
     for (float i = 1.0; i <= h; i += 2.0) {
-        // add the temperature for the frequency multiplied by i,
-        // and the amplitude divided by i
+        // add the temperature for frequency * i and amplitude / i
         c += temperature(x * i, t) / i;
     }
 
@@ -158,12 +162,26 @@ float curve(float x, float t) {
 }
 ```
 
-<HeatGraph3D model="simple" toolbox harmonics o={1} k={4} />
+<HeatGraph3D toolbox harmonics o={1} k={4} offset={0.25} />
 
-You can notice that the lower the harmonics, the higher the interferences are at the contact. These also appear in the real world because nothing has unlimited bandwidth.
+You can notice that the lower the harmonics, the higher the interferences are at the contact.
 
 ## Astral projection
 
 But how do you make an FFT?
 
-Time to open our third eye and switch dimensions: instead of representing time as a plane we're going represent it in its true form, which as we all know is a flat circle.
+Time to open our third eye and switch dimensions: instead of representing time as a plane we're going represent it in its true form, which as we all know is a circle repeating itself.
+
+To help us visualize that, let's make the curve draw into a rotating disk:
+
+<WindingGraph3D />
+
+If we tweak the rotation speed we get a different shape:
+
+Let's graph the geometric center of mass depending on the rotation speed:
+
+## Final thoughts
+
+That's all for today folks, hope you enjoyed the ride! All the animations on this post are computed in real-time using handwritten WebGL, feel free to [look at the souce code](https://github.com/fathyb/fathy.fr/tree/main/src/posts/every-sin) and even run it locally using the `readme` instructions!
+
+[Discuss on HackerNews]().

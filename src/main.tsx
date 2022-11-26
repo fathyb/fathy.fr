@@ -4,6 +4,7 @@ import { createRoot, hydrateRoot } from 'react-dom/client'
 import { App } from './components/app'
 import { StyleProvider } from './providers/style-provider'
 import { RouterProvider } from './providers/router-provider'
+import { ThreeFrameProvider } from './hooks/use-three-frame'
 
 const { root, hydrate } = getRoot()
 const app = (
@@ -11,7 +12,9 @@ const app = (
         <StrictMode>
             <RouterProvider>
                 <StyleProvider>
-                    <App />
+                    <ThreeFrameProvider>
+                        <App />
+                    </ThreeFrameProvider>
                     <UnmountStaticStyles />
                 </StyleProvider>
             </RouterProvider>

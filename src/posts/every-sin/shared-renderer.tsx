@@ -1,15 +1,9 @@
 import { Canvas, Props as CanvasProps } from '@react-three/fiber'
 import { createContext, PropsWithChildren, useContext } from 'react'
-import {
-    Camera,
-    Vector2,
-    Object3D,
-    Renderer,
-    WebGLRenderer,
-    WebGL1Renderer,
-} from 'three'
+import { Camera, Vector2, Object3D, Renderer, WebGLRenderer } from 'three'
 
 import { useStatic } from '../../hooks/use-static'
+import { ThreeFrameProvider } from '../../hooks/use-three-frame'
 
 const Context = createContext<null | SharedRenderer>(null)
 
@@ -17,12 +11,6 @@ export function SharedCanvas({
     depth = false,
     ...props
 }: Omit<CanvasProps, 'renderer'> & { depth?: boolean }) {
-    const ctx = useContext(Context)
-
-    if (!ctx) {
-        throw new Error('SharedCanvasProvider missing')
-    }
-
     return (
         <Canvas
             {...props}
@@ -36,6 +24,7 @@ export function SharedCanvas({
                     alpha: true,
                     stencil: false,
                     antialias: true,
+                    premultipliedAlpha: false,
                 })
             }
         />
@@ -54,7 +43,11 @@ export function SharedCanvasProvider({ children }: PropsWithChildren) {
             }),
     )
 
-    return <Context.Provider value={ctx}>{children}</Context.Provider>
+    return (
+        <Context.Provider value={ctx}>
+            <ThreeFrameProvider>{children}</ThreeFrameProvider>
+        </Context.Provider>
+    )
 }
 
 export class SharedRenderer extends WebGLRenderer {

@@ -1,22 +1,25 @@
 import { Canvas, Props as CanvasProps } from '@react-three/fiber'
-import { createContext, PropsWithChildren, useContext } from 'react'
+import { useState, useContext, createContext } from 'react'
 import { Camera, Vector2, Object3D, Renderer, WebGLRenderer } from 'three'
 
 import { useStatic } from '../../hooks/use-static'
-import { ThreeFrameProvider } from '../../hooks/use-three-frame'
 
-const Context = createContext<null | SharedRenderer>(null)
+const Context = createContext<null | { remount(): void }>(null)
 
 export function SharedCanvas({
+    children,
     depth = false,
     ...props
 }: Omit<CanvasProps, 'renderer'> & { depth?: boolean }) {
+    const [id, setId] = useState(0)
+    const ctx = useStatic(() => ({ remount: () => setId((id) => id + 1) }))
+
     return (
         <Canvas
             {...props}
+            flat
+            key={id}
             frameloop="demand"
-            //gl={(canvas) => ctx.create(canvas)}
-            //gl={(canvas) => new WebGL1Renderer({ canvas })}
             gl={(canvas) =>
                 new WebGLRenderer({
                     depth,
@@ -24,30 +27,47 @@ export function SharedCanvas({
                     alpha: true,
                     stencil: false,
                     antialias: true,
-                    premultipliedAlpha: false,
                 })
             }
-        />
+        >
+            <Context.Provider value={ctx}>{children}</Context.Provider>
+        </Canvas>
     )
 }
 
-export function SharedCanvasProvider({ children }: PropsWithChildren) {
-    const ctx = useStatic(
-        () =>
-            new SharedRenderer({
-                alpha: true,
-                antialias: true,
-                canvas: supportsOffscreen
-                    ? new OffscreenCanvas(512, 512)
-                    : undefined,
-            }),
-    )
-
+function Wrapper({
+    children,
+    depth = false,
+    ...props
+}: Omit<CanvasProps, 'renderer'> & { depth?: boolean }) {
     return (
-        <Context.Provider value={ctx}>
-            <ThreeFrameProvider>{children}</ThreeFrameProvider>
-        </Context.Provider>
+        <Canvas
+            {...props}
+            flat
+            frameloop="demand"
+            gl={(canvas) =>
+                new WebGLRenderer({
+                    depth,
+                    canvas,
+                    alpha: true,
+                    stencil: false,
+                    antialias: true,
+                })
+            }
+        >
+            {children}
+        </Canvas>
     )
+}
+
+export function useCanvasRemount() {
+    const ctx = useContext(Context)
+
+    if (!ctx) {
+        throw new Error('SharedCanvasProvider missing')
+    }
+
+    return ctx.remount
 }
 
 export class SharedRenderer extends WebGLRenderer {

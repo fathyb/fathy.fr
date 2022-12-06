@@ -3,6 +3,7 @@ import { Color, Vector3, IUniform } from 'three'
 
 import { useStatic } from '../../hooks/use-static'
 import { useThreeFrame } from '../../hooks/use-three-frame'
+
 import { HeatKernel } from './heat-kernel'
 import { KernelUniform } from './kernel'
 
@@ -17,6 +18,8 @@ export interface HeatShaderProps {
     fragment?: string
     uniforms?: ShaderUniforms
     model?: HeatShaderModel
+    heatKernelWidth?: number
+    heatKernelHeight?: number
 }
 
 export function useHeatShader({
@@ -27,6 +30,8 @@ export function useHeatShader({
     delay = 0,
     rewind = true,
     duration = 5000,
+    heatKernelWidth = 256,
+    heatKernelHeight = model === 'contact' ? 512 : 8,
 }: HeatShaderProps) {
     const { gl } = useThree()
     const state = useStatic(() => ({
@@ -65,7 +70,7 @@ export function useHeatShader({
     return shaders
 
     function initState() {
-        const compute = new HeatKernel()
+        const compute = new HeatKernel(heatKernelWidth, heatKernelHeight)
 
         if (model === 'contact') {
             compute.uniforms.omega.value = 1
@@ -78,7 +83,7 @@ export function useHeatShader({
 
             for (const [name, uniform] of Object.entries(mainUniforms)) {
                 if (uniform && name in uniforms) {
-                    uniforms[name as KernelUniform<typeof HeatKernel>] = uniform
+                    uniforms[name as keyof typeof uniforms] = uniform
                 }
             }
         }
@@ -157,8 +162,6 @@ export function useHeatShader({
                     }
                 `,
                 fragmentShader: `
-                    precision mediump float;
-    
                     uniform vec3 hot;
                     uniform vec3 cold;
                     uniform float time;
@@ -173,7 +176,6 @@ export function useHeatShader({
                     varying vec2 vUv;
 
                     const float pi = 3.1415926535897932384626433832795;
-                    const vec4 shift = vec4(1.0, 1.0 / 255.0, 1.0 / 65025.0, 1.0 / 16581375.0);
 
                     float getOpacity() {
                         if (selectDepth > time && phaseAnimation == 0.0) {
@@ -217,6 +219,12 @@ export function useHeatShader({
                             curve * (1.0 - padding * 2.0) + padding
                         );
                     }
+
+                    float unpack(vec4 color) {
+                        const vec4 shift = vec4(1.0, 1.0 / 255.0, 1.0 / 65025.0, 1.0 / 16581375.0);
+
+                        return dot(color, shift) * 4.0 - 2.0;
+                    }
         
                     float curve(float x, float t) {
                         float y = selectDepth < 0.0 ? t : selectDepth;
@@ -224,10 +232,9 @@ export function useHeatShader({
                         
                         return initialSquare && y == 0.0
                             ? mod(base, 1.0) < 0.5 ? 1.0 : 0.0
-                            : dot(
-                                texture2D(diffusion, vec2(mod(base + phaseAnimation * t, 1.0), y)),
-                                shift
-                            ) * 2.0 - 0.5;
+                            : (
+                                unpack(texture2D(diffusion, vec2(mod(base + phaseAnimation * t, 1.0), y))) + 1.0
+                            ) / 2.0;
                     }
         
                     vec4 heat(float x) {
@@ -265,6 +272,9 @@ function animate(time: number, rewind: boolean | number) {
         }
     }
 }
+
+console.log('hot', hsl('#ff2e69'))
+console.log('cold', hsl('#0ffbff'))
 
 function hsl(color: string) {
     const [r, g, b] = new Color(color).toArray()

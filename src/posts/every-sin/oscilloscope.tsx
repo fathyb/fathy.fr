@@ -1,7 +1,5 @@
-import { Box, Button, Slider } from '@mui/material'
 import { useEffect, useRef } from 'react'
-
-import { useRequestAnimationFrame } from '../../hooks/use-raf'
+import { Box, Button, Slider } from '@mui/material'
 
 interface Context {
     type: OscillatorType
@@ -68,7 +66,7 @@ export default function Oscilloscope({ type, model }: Props) {
                     />
                 </Box>
             ) : (
-                <Box display="flex" flexDirection="row" mr={4}>
+                <Box display="flex" flexDirection="row" mr={4} flex={1}>
                     <Box display="flex" flexDirection="column" mr={2}>
                         <Button
                             onClick={() => {
@@ -131,32 +129,42 @@ export default function Oscilloscope({ type, model }: Props) {
             )}
 
             <Box
+                flex={1}
+                display="flex"
+                flexDirection="row"
+                flexWrap="wrap"
+                alignItems="center"
+                justifyContent="center"
                 sx={{
-                    flex: 1,
-
                     canvas: {
                         width: '100%',
                     },
                 }}
             >
-                <canvas
-                    width={512}
-                    height={256}
-                    ref={(canvas) => {
-                        ref.current.gfx.osc = canvas?.getContext('2d') ?? null
+                <Box flex={1}>
+                    <canvas
+                        width={512}
+                        height={256}
+                        ref={(canvas) => {
+                            ref.current.gfx.osc =
+                                canvas?.getContext('2d') ?? null
 
-                        draw(ref.current)
-                    }}
-                />
-                <canvas
-                    width={512}
-                    height={300}
-                    ref={(canvas) => {
-                        ref.current.gfx.fft = canvas?.getContext('2d') ?? null
+                            draw(ref.current)
+                        }}
+                    />
+                </Box>
+                <Box flex={1}>
+                    <canvas
+                        width={512}
+                        height={300}
+                        ref={(canvas) => {
+                            ref.current.gfx.fft =
+                                canvas?.getContext('2d') ?? null
 
-                        draw(ref.current)
-                    }}
-                />
+                            draw(ref.current)
+                        }}
+                    />
+                </Box>
             </Box>
         </Box>
     )
@@ -341,7 +349,7 @@ function drawSpectrum(ref: Context) {
     const freqData = new Uint8Array(analyser.frequencyBinCount)
     const topPanelHeight = height * 0.165
     const scale = {
-        x: (width / freqData.length) * 2.1,
+        x: (width / freqData.length) * 1, //2.1,
         y: (height - topPanelHeight) / 256,
     }
     const gradient = ctx.createPattern(gradientImage, 'repeat')
@@ -419,8 +427,9 @@ function drawSpectrum(ref: Context) {
 
     ctx.beginPath()
 
-    for (let x = 0; x < freqData.length; x++)
+    for (let x = 0; x < freqData.length; x++) {
         ctx.lineTo(x * scale.x, height - freqData[x] * scale.y)
+    }
 
     ctx.stroke()
 }

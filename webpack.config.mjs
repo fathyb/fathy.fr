@@ -96,7 +96,7 @@ export default ({ generator, prod = false }) => {
         module: {
             rules: [
                 {
-                    test: /\.(dat)|(jpg)|(png)|(gif)|(ttf)|(woff2?)$/i,
+                    test: /\.(mp3)|(jpg)|(png)|(gif)|(ttf)|(woff2?)$/i,
                     type: 'asset/resource',
                 },
                 {
@@ -185,7 +185,7 @@ export default ({ generator, prod = false }) => {
                                     [
                                         RehypeToc,
                                         {
-                                            headings: ['h2', 'h3', 'h4', 'h5'],
+                                            headings: ['h2'],
                                             customizeTOC: (toc) =>
                                                 toc.children[0].children.length
                                                     ? {

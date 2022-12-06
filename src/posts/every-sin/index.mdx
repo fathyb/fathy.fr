@@ -1,18 +1,18 @@
-# Every thing is a sin()
+# Every thing is a `sin()`
 
-> December 1st 2022 - **Draft**
+> December 11th 2022 - **Draft**
 
 import { Box } from '@mui/material'
 import HeatGraph from './heat-graph'
+import GoodTimes from './good-times'
 import ContactRod from './contact-rod'
 import GlowingRod from './glowing-rod'
 import HeatGraph3D from './heat-graph-3d'
 import Oscilloscope from './oscilloscope'
 import WindingGraph3D from './winding-graph-3d'
+import WindingGraph2D from './winding-graph-2d'
 
-In this second blog post I'm going to explain _Fourier series_ from the perspective of a developper who doesn't really understand mathematics.
-
-What do heat transfer, music, SVG, and Wi-Fi have in common? In 1807 Fourier wrote "_Treatise on the propagation of heat in solid bodies_" and it made a lot nerds happy.
+What do heat transfer, music, JPEG, and Wi-Fi have in common? In 1807 Joseph Fourier presented his paper "_On the propagation of heat in solid bodies_" to the Paris Institute and it made a lot nerds happy.
 
 ## Inanimate carbon rod
 
@@ -26,11 +26,23 @@ If we graph the temperature we get a beautifiul sine wave:
 
 Let's measure the rod temperature while it cools off:
 
-<Box display="flex" flexDirection="row" flexWrap="wrap">
-    <GlowingRod cool model="simple" />
-    <HeatGraph cool model="simple" />
+<Box
+    display="flex"
+    flexDirection="row"
+    flexWrap="wrap"
+    alignItems="center"
+    justifyContent="center"
+>
+    <Box flex={1}>
+        <GlowingRod cool model="simple" />
+    </Box>
+    <Box flex={1}>
+        <HeatGraph cool model="simple" />
+    </Box>
+    <Box flex={1}>
+        <HeatGraph3D model="simple" />
+    </Box>
 </Box>
-<HeatGraph3D model="simple" />
 
 import KatexStyles from './katex-styles'
 
@@ -44,8 +56,8 @@ In the programming world we can translate this to the following code currently r
 
 ```glsl
 float curve(float x, float t) {
-    float o = 2 * pi; // omega: adjust frequency
-    float k = 1; // conductivity: adjust how fast heat propagates
+    float o = 2.0 * pi; // omega: adjust frequency
+    float k = 1.0; // conductivity: adjust how fast heat propagates
 
     return cos(o * x) * exp(-k * o * o * t);
 }
@@ -55,30 +67,27 @@ float curve(float x, float t) {
 
 Now here is what happens when we make contact between a hot rod and a cold rod:
 
-<Box display="flex" flexDirection="row" flexWrap="wrap">
-    <ContactRod cool model="contact" delay={0.2} />
-    <HeatGraph cool model="contact" delay={0.2} />
+<Box
+    display="flex"
+    flexDirection="row"
+    flexWrap="wrap"
+    alignItems="center"
+    justifyContent="center"
+>
+    <Box flex={1}>
+        <ContactRod cool model="contact" delay={0.2} />
+    </Box>
+    <Box flex={1}>
+        <HeatGraph cool model="contact" delay={0.2} />
+    </Box>
+    <Box flex={1}>
+        <HeatGraph3D model="contact" delay={0.2} />
+    </Box>
 </Box>
-<HeatGraph3D model="contact" delay={0.2} />
 
 How can we compute the heat flow in this case? We have a formula for sine waves, but what we have here is a square wave.
 
 ## Hip to be square
-
-It's time for our musical break, here are two unrelated 5 seconds musical samples:
-
-<Box display="flex" flexDirection="row" width="100%" textAlign="center">
-    <Box flex={1}>
-        <p>Chic - Good Times</p>
-    </Box>
-    <Box flex={1}>
-        <p>Bee Gees - More Than A Woman</p>
-    </Box>
-</Box>
-
-This level indicator tells us that the Chic song with the bass has a lot of low frequencies, and the Debussy piece with the flute has a lot of high frequencies. How does it do that?
-
-What it does is called an FFT: an Fast Fourier Transform, it computes which sine waves are contained in our signal in real-time. Fourier didn't just found how heat propagates on a perfect sine curve, he found how to decompose any function into a sum of infinite sine waves.
 
 Let's pull some fairly standard electronic music production gear: an oscillator, an oscilloscope, and a spectrum analyzer with an harmonics indicator.
 
@@ -96,49 +105,7 @@ If you play with the oscillator a bit you will notice two important things:
 -   a sine wave only has one harmonic: itself
 -   a square wave only has odd harmonics decreasing exponentially
 
-Let's use the WebAudio API to construct a square wave using harmonics:
-
-```js
-// An offline context doesn't need access to speakers
-let ctx = new OfflineAudioContext(options)
-// Create an analyser to read FFT data
-let analyser = ctx.createAnalyser()
-// Let's start with 8 harmonics
-let harmonics = 8
-// We want of square wave of 440 Hz
-let frequency = 440
-
-// Loop over odd harmonics
-for (let i = 1; i <= harmonics; i += 2) {
-    // Create a gain to control the amplitude of the sin wave
-    let gain = ctx.createGain()
-    // Create an oscillator to generate a sine wave
-    let oscillator = ctx.createOscillator()
-
-    // Set an exponential amplitude
-    gain.gain.value = 1 / i
-    // Generate a sine wave
-    oscillator.type = 'sine'
-    // Set the harmonic frequency
-    oscillator.frequency.setValueAtTime(frequency * i, ctx.currentTime)
-
-    // Harmonic 1: [ Oscillator ] => [ Gain ] =\
-    // Harmonic 2: [ Oscillator ] => [ Gain ] ==> [ Analyser ]
-    // Harmonic 3: [ Oscillator ] => [ Gain ] =/
-    oscillator.connect(gain)
-    gain.connect(analyser)
-}
-```
-
-Let's plug this into our instruments and add a slider for the `harmonics` variable:
-
-<Oscilloscope model="compose" />
-
-You'll notice that nothing changes past the 50th harmonic. This is because our `AudioContext` is configured for human hearing, so it ignores frequencies higher than 22kHz, and `440 * 50 = 22_000`, and that means that at 50 harmonics, our square wave sounds exactly the same to human ear as a real square wave.
-
-## Shape of things to come
-
-We have everything needed to decompose a square wave into sine waves and compute heat diffusion using them. Let's update our code:
+And that's all a square wave is, a sine wave with odd harmonics decreasing exponentially. So we have everything needed to decompose a square wave into sine waves and compute heat diffusion using them. Let's update our code:
 
 ```glsl
 float temperature(float x, float t) {
@@ -164,24 +131,100 @@ float curve(float x, float t) {
 
 <HeatGraph3D toolbox harmonics o={1} k={4} offset={0.25} />
 
-You can notice that the lower the harmonics, the higher the interferences are at the contact.
-
 ## Astral projection
 
-But how do you make an FFT?
+But how do you do a Fourier transform?
 
-Time to open our third eye and switch dimensions: instead of representing time as a plane we're going represent it in its true form, which as we all know is a circle repeating itself.
+It's time to open our third eye and switch dimensions: instead of representing time as a plane we're going represent it in its true form, which as we all know is a circle repeating itself.
 
-To help us visualize that, let's make the curve draw into a rotating disk:
+To help us visualize that, let's make the curve draw into a spinning disk:
+
+<WindingGraph3D toolbox />
+
+Tweaking the rotation speed gives us different shapes. Let's graph the average horizontal position based on the rotation speed:
+
+<WindingGraph2D speed={5} />
+
+Let's plug a square wave generate into this graph and see what happens:
+
+<WindingGraph2D speed={20} harmonics={25} toolbox />
+
+What we have here isn't exactly a Fourier transform, but it's close enough. It does what Fourier transforms does: represent signals as a function of frequency instead of a function time.
 
 <WindingGraph3D />
 
-If we tweak the rotation speed we get a different shape:
+## Shape of things to come
 
-Let's graph the geometric center of mass depending on the rotation speed:
+Every thing can be represented as signal, and every signal can be represented as an infinite sum of sine waves. So
 
 ## Final thoughts
 
-That's all for today folks, hope you enjoyed the ride! All the animations on this post are computed in real-time using handwritten WebGL, feel free to [look at the souce code](https://github.com/fathyb/fathy.fr/tree/main/src/posts/every-sin) and even run it locally using the `readme` instructions!
+That's all for today folks, hope you enjoyed the ride.
 
-[Discuss on HackerNews]().
+All animations in this post are computed in real-time using WebGL and SVG, feel free to [look at the souce code](https://github.com/fathyb/fathy.fr/tree/main/src/posts/every-sin) and even run it locally using the `readme` instructions!
+
+### Discuss
+
+You can discuss this post on Hacker News. You can also [open a discussion on the website repo](https://github.com/fathyb/fathy.fr/discussions) to ask me questions directly.
+
+### Get notified
+
+If you'd like to subscribe for updates you can use [the RSS feed](/rss.xml), or GitHub by or [watching the website repo for releases](https://github.com/fathyb/fathy.fr).
+
+### Translations
+
+Translations are welcomed! Please [edit this page on GitHub](https://github.com/fathyb/fathy.fr/blob/main/src/posts/every-sin/index.mdx) to open a pull request.
+
+## Appendix
+
+### Astral projection
+
+The center of mass visualization is based on [work by Grant Sanderson](https://www.youtube.com/watch?v=spUNpyF58BY) from [3Blue1Brown](https://www.3blue1brown.com), I recommend [checking his videos out](https://www.youtube.com/c/3blue1brown) if you're interested in this topic.
+
+If you're like me the formula might be hard to grasp:
+
+> $\hat{g}(f)=\int_{t1}^{t2}g(t)e^{-2{\pi}ift}dt$
+
+Here is what I ended up with using JavaScript and simple math:
+
+```js
+function kindaFFT({
+    // Input signal
+    g = (x) => Math.sin(x * Math.PI * 2),
+    // Rotation frequency
+    f = 1,
+    // How many samples should we collect
+    samples = 64,
+} = {}) {
+    // Store the graph data
+    let x = []
+    let y = []
+    // Store weighted averages
+    let centerX = 0
+    let centerY = 0
+    // Store averages weight
+    let divider = 0
+
+    // Loop over all the angles
+    for (let i = 1; i <= samples; i++) {
+        // Loop for each winding rotation
+        for (let t = (i / samples) * f; t <= f; t++) {
+            // Get the curve value for this angle and winding
+            let value = g(t / f)
+
+            // We now have a vector: an angle and an amplitude,
+            // convert it vector into cartesian coordinates:
+            centerX += value * Math.cos(t * Math.PI * 2)
+            centerY += value * Math.sin(t * Math.PI * 2)
+            // Add the value to the average weights
+            divider += value
+        }
+    }
+
+    // Compute the average position
+    return {
+        x: centerX / divider,
+        y: centerY / divider,
+    }
+}
+```

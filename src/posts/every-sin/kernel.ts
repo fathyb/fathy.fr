@@ -1,6 +1,7 @@
 import {
     Mesh,
     Scene,
+    IUniform,
     LinearFilter,
     WebGLRenderer,
     PlaneGeometry,
@@ -9,6 +10,7 @@ import {
     WebGLRenderTarget,
     OrthographicCamera,
     ClampToEdgeWrapping,
+    NearestFilter,
 } from 'three'
 
 export type KernelUniform<K> = keyof KernelUniforms<K>
@@ -17,7 +19,7 @@ export type KernelUniforms<K> = K extends Kernel<infer T>
     : K extends { new (): Kernel<infer T> }
     ? T
     : never
-export type KernelParameters = Record<string, { value: number | boolean }>
+export type KernelParameters = Record<string, IUniform>
 export interface KernelOptions<T> {
     glsl: string
     width: number
@@ -25,15 +27,24 @@ export interface KernelOptions<T> {
     uniforms: T
 }
 
-export class Kernel<T extends KernelParameters> {
+export class Kernel<T extends KernelParameters = {}> {
     public static create<T extends KernelParameters>(
         options: KernelOptions<T>,
     ): {
-        new (): Kernel<T>
+        new (
+            options?: Partial<Pick<KernelOptions<T>, 'width' | 'height'>>,
+        ): Kernel<T>
     } {
         return class extends Kernel<T> {
-            constructor() {
-                super(options)
+            constructor({
+                width = options.width,
+                height = options.height,
+            } = {}) {
+                super({
+                    ...options,
+                    width,
+                    height,
+                })
             }
         }
     }
@@ -41,7 +52,7 @@ export class Kernel<T extends KernelParameters> {
     public readonly texture
     public readonly uniforms
 
-    private needsUpdate = true
+    protected needsUpdate = true
     private readonly target
     private readonly scene = new Scene()
     private readonly camera = new OrthographicCamera(-1, 1, 1, -1, -1, 1)
@@ -63,6 +74,8 @@ export class Kernel<T extends KernelParameters> {
         const material = new ShaderMaterial({
             uniforms: renderUniforms,
             fragmentShader: `
+                varying vec2 vUv;
+
                 ${code}
 
                 void main() {
@@ -112,10 +125,11 @@ export class Kernel<T extends KernelParameters> {
             }
 
             if (!needsUpdate) {
-                return
+                return false
             }
         }
 
+        console.log('rendering kernel')
         gl.setRenderTarget(this.target)
 
         try {
@@ -123,6 +137,8 @@ export class Kernel<T extends KernelParameters> {
         } finally {
             gl.setRenderTarget(null)
         }
+
+        return true
     }
 }
 

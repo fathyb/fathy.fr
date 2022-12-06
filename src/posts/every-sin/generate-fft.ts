@@ -1,32 +1,72 @@
-export async function generateFFT({
-    type,
-    frequency,
-}: {
-    type: OscillatorType
-    frequency: number
-}) {
-    const fftSize = 256
+export async function generateFFT(
+    audioSampleUrl: string,
+    { fps = 1, fftSize = 32 } = {},
+) {
+    const res = await fetch(audioSampleUrl)
+    const buffer = await res.arrayBuffer()
+    const ctx = new AudioContext()
+    const audioBuffer = await ctx.decodeAudioData(buffer)
+    const samples = Math.ceil(audioBuffer.duration * fps)
+    const ratio = audioBuffer.duration / samples
+    const binCount = fftSize / 2
+    const fft = new Uint8Array(samples * binCount)
+
+    for (let i = 0; i < samples; i++) {
+        await analyze(
+            audioBuffer,
+            fft.subarray(i * binCount, i * binCount + binCount),
+            { fftSize },
+        )
+
+        const ctx = new OfflineAudioContext({
+            length: Math.ceil(20_000 / fps),
+            sampleRate: 20_000,
+            numberOfChannels: 1,
+        })
+        const source = ctx.createBufferSource()
+        const analyser = ctx.createAnalyser()
+
+        analyser.fftSize = fftSize
+        analyser.smoothingTimeConstant = 0
+        source.loop = true
+        source.buffer = audioBuffer
+        source.connect(analyser)
+        source.start(0, i * ratio)
+
+        await ctx.startRendering()
+
+        analyser.getByteFrequencyData(
+            fft.subarray(i * binCount, i * binCount + binCount),
+        )
+
+        source.stop()
+        source.disconnect(analyser)
+    }
+
+    return { buffer: fft, samples, size: binCount }
+}
+
+async function analyze(
+    input: AudioBuffer,
+    output: Uint8Array,
+    { sampleRate = 20_000, fftSize = 128 } = {},
+) {
     const ctx = new OfflineAudioContext({
-        length: fftSize,
-        sampleRate: 44100,
+        length: sampleRate,
+        sampleRate: sampleRate,
         numberOfChannels: 1,
     })
+    const source = ctx.createBufferSource()
     const analyser = ctx.createAnalyser()
-    const oscillator = ctx.createOscillator()
 
     analyser.fftSize = fftSize
-    oscillator.type = type
-    oscillator.frequency.setValueAtTime(frequency, ctx.currentTime)
-    oscillator.connect(analyser)
-    oscillator.start()
+    analyser.smoothingTimeConstant = 0
+    source.loop = true
+    source.buffer = input
+    source.connect(analyser)
+    //source.start(0, i * ratio)
 
     await ctx.startRendering()
 
-    const fft = new Uint8Array(analyser.frequencyBinCount)
-    const wave = new Float32Array(fftSize)
-
-    analyser.getByteFrequencyData(fft)
-    analyser.getFloatTimeDomainData(wave)
-
-    return { fft, wave }
+    analyser.getByteFrequencyData(output)
 }

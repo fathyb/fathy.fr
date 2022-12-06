@@ -48,7 +48,7 @@ export default function HeatGraph3D(props: Omit<Props, 'camera'>) {
                   ...defaultUniforms,
                   harmonics: {
                       min: 1,
-                      max: 128,
+                      max: 49,
                       step: 1,
                       name: 'h',
                       desc: 'how many harmonics',
@@ -80,18 +80,22 @@ export default function HeatGraph3D(props: Omit<Props, 'camera'>) {
                     justifyContent="center"
                     flexWrap="wrap"
                 >
-                    <ContactRod
-                        cool
-                        delay={0.2}
-                        model="contact"
-                        uniforms={uniforms}
-                    />
-                    <HeatGraph
-                        cool
-                        delay={0.2}
-                        model="contact"
-                        uniforms={uniforms}
-                    />
+                    <Box flex={1}>
+                        <ContactRod
+                            cool
+                            delay={0.2}
+                            model="contact"
+                            uniforms={uniforms}
+                        />
+                    </Box>
+                    <Box flex={1}>
+                        <HeatGraph
+                            cool
+                            delay={0.2}
+                            model="contact"
+                            uniforms={uniforms}
+                        />
+                    </Box>
                 </Box>
             ) : null}
             <Box
@@ -202,6 +206,7 @@ function Scene({
         fragment,
         cool: true,
         rewind: !toolbox,
+        heatKernelHeight: 64,
     })
     const shaders = useStatic(() =>
         Array(resolution)

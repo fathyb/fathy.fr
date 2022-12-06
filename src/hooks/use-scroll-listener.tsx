@@ -13,5 +13,6 @@ export function useScrollListener(
     const listener = useDebouncer(callback, debounce)
 
     useEffect(callback, [])
+    useEventListener(() => window, 'resize', listener, { passive })
     useEventListener(() => document, 'scroll', listener, { passive })
 }

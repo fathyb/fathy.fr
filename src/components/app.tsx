@@ -1,3 +1,4 @@
+import Giscus from '@giscus/react'
 import { useState } from 'react'
 import { matchPath, useLocation } from 'react-router'
 import { Box, Typography, useTheme } from '@mui/material'
@@ -27,12 +28,23 @@ function Route() {
     const [pendingPost, setPendingPost] = useState('')
     const post = posts.find((p) => matchPath(p.path, pathname))
 
-    useTitle(post ? `${post.title} - Fathy Boundjadj` : 'Fathy Boundjadj')
+    useTitle(post?.title ?? null)
 
     if (post) {
         return (
             <MDXWrapper main>
                 <post.post />
+                <section>
+                    <Giscus
+                        term={post.title}
+                        repo="fathyb/fathy.fr"
+                        theme="transparent_dark"
+                        repoId="R_kgDOIaiJcg"
+                        loading="lazy"
+                        mapping="specific"
+                        reactionsEnabled="0"
+                    />
+                </section>
                 <Footer githubEditPath={`src/posts/${post.path}/index.mdx`} />
             </MDXWrapper>
         )
@@ -62,45 +74,47 @@ function Route() {
             >
                 <Sidebar />
             </Box>
-            {posts.map((post) => (
-                <Box key={post.path} position="relative" zIndex={100}>
-                    <MDXWrapper
-                        sx={{
-                            overflow: 'hidden',
-                            position: 'relative',
-                            maxHeight: theme.spacing(60),
-                            maskImage:
-                                'linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0) 90%)',
-                        }}
-                    >
-                        <post.preview />
-                    </MDXWrapper>
+            {posts
+                .filter((post) => !post.hidden)
+                .map((post) => (
+                    <Box key={post.path} position="relative" zIndex={100}>
+                        <MDXWrapper
+                            sx={{
+                                overflow: 'hidden',
+                                position: 'relative',
+                                maxHeight: theme.spacing(60),
+                                maskImage:
+                                    'linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 0) 90%)',
+                            }}
+                        >
+                            <post.preview />
+                        </MDXWrapper>
 
-                    <Box
-                        sx={{
-                            position: 'absolute',
-                            bottom: theme.spacing(1),
-                            right: 0,
-                            left: 0,
+                        <Box
+                            sx={{
+                                position: 'absolute',
+                                bottom: theme.spacing(1),
+                                right: 0,
+                                left: 0,
 
-                            textAlign: 'center',
-                        }}
-                    >
-                        <Typography>
-                            <Link
-                                to={post.path}
-                                onClick={() => {
-                                    setPendingPost(post.path)
-                                }}
-                            >
-                                {pending && pendingPost === post.path
-                                    ? 'Loading..'
-                                    : 'Read more..'}
-                            </Link>
-                        </Typography>
+                                textAlign: 'center',
+                            }}
+                        >
+                            <Typography>
+                                <Link
+                                    to={post.path}
+                                    onClick={() => {
+                                        setPendingPost(post.path)
+                                    }}
+                                >
+                                    {pending && pendingPost === post.path
+                                        ? 'Loading..'
+                                        : 'Read more..'}
+                                </Link>
+                            </Typography>
+                        </Box>
                     </Box>
-                </Box>
-            ))}
+                ))}
         </>
     )
 }

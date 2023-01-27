@@ -18,7 +18,8 @@ export const Link = forwardRef<HTMLAnchorElement, Props>(function Link(
         external = to
             ? to.startsWith('http://') ||
               to.startsWith('https://') ||
-              to.startsWith('mailto:')
+              to.startsWith('mailto:') ||
+              to.endsWith('.xml')
             : true,
         ...props
     }: Props,

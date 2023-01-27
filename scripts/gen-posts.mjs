@@ -137,6 +137,7 @@ const chunks = posts.map((post) => {
         {
             path: ${JSON.stringify('/' + slug)},
             title: ${JSON.stringify(post.title)},
+            hidden: ${JSON.stringify(slug === 'every-sin')},
             post: lazy(() =>
                 import(${JSON.stringify(`./${post.file}.entry`)})
             ),

@@ -24,6 +24,7 @@
         "@emotion/styled": "^11.10.5",
         "@fontsource/plus-jakarta-sans": "^4.5.10",
         "@fontsource/roboto": "^4.5.8",
+        "@giscus/react": "^2.2.6",
         "@mdx-js/react": "^2.1.5",
         "@mui/icons-material": "^5.10.9",
         "@mui/material": "^5.10.11",

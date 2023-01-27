@@ -133,7 +133,7 @@ const components: MDXComponents = {
         const options: Record<string, string> = {}
 
         if (meta) {
-            for (const arg of meta.split(',')) {
+            for (const arg of meta.split(/,|\s/)) {
                 const match = arg.match(/^([^\/]*)\/(.*)#(.*)@(.*)$/)
 
                 if (match) {
@@ -141,25 +141,31 @@ const components: MDXComponents = {
                 } else {
                     const [key, value] = arg.split('=')
 
-                    if (key && value) {
-                        options[key] = value
+                    if (key) {
+                        options[key] = value ?? 'true'
                     }
                 }
             }
         }
 
-        const className = options.align ? `align-${options.align}` : undefined
+        const containerClass = options.align
+            ? `align-${options.align}`
+            : undefined
+        const preClass = options['no-margin'] ? 'no-margin' : undefined
 
         if (link) {
             const [, project, name, line, rev] = link
             const [lineStart] = line.split('-')
 
             return (
-                <Box className={className} sx={{ overflow: 'auto' }}>
+                <Box className={containerClass} sx={{ overflow: 'auto' }}>
                     <Box width="fit-content">
                         <Box
                             mx={1}
                             sx={{
+                                marginBottom: options['no-margin']
+                                    ? theme.spacing(1)
+                                    : 0,
                                 code: {
                                     fontSize: theme.typography.body2.fontSize,
                                 },
@@ -220,8 +226,10 @@ const components: MDXComponents = {
                         </Box>
                         <Box
                             component="pre"
-                            className={props.className}
-                            sx={{ paddingTop: '0 !important' }}
+                            className={cx(props.className, preClass)}
+                            sx={{
+                                paddingTop: '0 !important',
+                            }}
                         >
                             {children}
                         </Box>
@@ -232,7 +240,7 @@ const components: MDXComponents = {
             return (
                 <Box
                     component="pre"
-                    className={cx(className, props.className)}
+                    className={cx(containerClass, preClass, props.className)}
                     sx={{ overflow: 'auto' }}
                 >
                     {children}
@@ -461,14 +469,15 @@ const useClasses = makeStyles()((theme) => ({
             color: theme.palette.grey[200],
             fontFamily: theme.typography.h1.fontFamily,
         },
-        '& h1, & h2, & h3, & h4, & h5, & h6, & p, & ol, & ul, & blockquote': {
-            marginLeft: 'auto !important',
-            marginRight: 'auto !important',
+        '& h1, & h2, & h3, & h4, & h5, & h6, & p, & ol, & ul, & blockquote, & section':
+            {
+                marginLeft: 'auto !important',
+                marginRight: 'auto !important',
 
-            [`@media (min-width: ${theme.spacing(125)})`]: {
-                maxWidth: theme.spacing(125),
+                [`@media (min-width: ${theme.spacing(125)})`]: {
+                    maxWidth: theme.spacing(125),
+                },
             },
-        },
         '& code, & ol, & ul, & strong, & span.math': {
             color: lighten(theme.palette.text.primary, 0.35),
         },
@@ -541,6 +550,13 @@ const useClasses = makeStyles()((theme) => ({
 
         '& .token': {
             textDecoration: 'none !important',
+        },
+
+        '& pre.no-margin': {
+            marginTop: 0,
+            marginBottom: 0,
+            paddingTop: '0 !important',
+            paddingBottom: '0 !important',
         },
     },
 }))

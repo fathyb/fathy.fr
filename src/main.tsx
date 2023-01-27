@@ -4,22 +4,17 @@ import { createRoot, hydrateRoot } from 'react-dom/client'
 import { App } from './components/app'
 import { StyleProvider } from './providers/style-provider'
 import { RouterProvider } from './providers/router-provider'
-import { ThreeFrameProvider } from './hooks/use-three-frame'
 
 const { root, hydrate } = getRoot()
 const app = (
-    <>
-        <StrictMode>
-            <RouterProvider>
-                <StyleProvider>
-                    <ThreeFrameProvider>
-                        <App />
-                    </ThreeFrameProvider>
-                    <UnmountStaticStyles />
-                </StyleProvider>
-            </RouterProvider>
-        </StrictMode>
-    </>
+    <StrictMode>
+        <RouterProvider>
+            <StyleProvider>
+                <App />
+                <UnmountStaticStyles />
+            </StyleProvider>
+        </RouterProvider>
+    </StrictMode>
 )
 
 if (hydrate) {

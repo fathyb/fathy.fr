@@ -1,6 +1,6 @@
 # Every thing is a `sin()`
 
-> December 11th 2022 - **Draft**
+> February 11, 2023 - **Draft**
 
 import { Box } from '@mui/material'
 import HeatGraph from './heat-graph'
@@ -12,11 +12,13 @@ import Oscilloscope from './oscilloscope'
 import WindingGraph3D from './winding-graph-3d'
 import WindingGraph2D from './winding-graph-2d'
 
-What do heat transfer, music, JPEG, and Wi-Fi have in common? In 1807 Joseph Fourier presented his paper "_On the propagation of heat in solid bodies_" to the Paris Institute and it made a lot nerds happy.
+What do heat transfer, music, JPEG, and Wi-Fi have in common? In 1807 Jean-Baptiste Fourier presented his paper "_On the propagation of heat in solid bodies_" to the Paris Institute and it made a lot nerds happy.
 
 ## Inanimate carbon rod
 
 We'll start by looking at this rod with an infrared camera:
+
+---
 
 <GlowingRod model="simple" />
 
@@ -131,7 +133,7 @@ float curve(float x, float t) {
 
 <HeatGraph3D toolbox harmonics o={1} k={4} offset={0.25} />
 
-## Astral projection
+## Do the astral plane
 
 But how do you do a Fourier transform?
 
@@ -151,8 +153,6 @@ Let's plug a square wave generate into this graph and see what happens:
 
 What we have here isn't exactly a Fourier transform, but it's close enough. It does what Fourier transforms does: represent signals as a function of frequency instead of a function time.
 
-<WindingGraph3D />
-
 ## Shape of things to come
 
 Every thing can be represented as signal, and every signal can be represented as an infinite sum of sine waves. So
@@ -163,21 +163,9 @@ That's all for today folks, hope you enjoyed the ride.
 
 All animations in this post are computed in real-time using WebGL and SVG, feel free to [look at the souce code](https://github.com/fathyb/fathy.fr/tree/main/src/posts/every-sin) and even run it locally using the `readme` instructions!
 
-### Discuss
-
-You can discuss this post on Hacker News. You can also [open a discussion on the website repo](https://github.com/fathyb/fathy.fr/discussions) to ask me questions directly.
-
-### Get notified
-
-If you'd like to subscribe for updates you can use [the RSS feed](/rss.xml), or GitHub by or [watching the website repo for releases](https://github.com/fathyb/fathy.fr).
-
-### Translations
-
-Translations are welcomed! Please [edit this page on GitHub](https://github.com/fathyb/fathy.fr/blob/main/src/posts/every-sin/index.mdx) to open a pull request.
+[Discuss on HN](#) - [Discuss on GitHub](https://github.com/fathyb/fathy.fr/discussions)
 
 ## Appendix
-
-### Astral projection
 
 The center of mass visualization is based on [work by Grant Sanderson](https://www.youtube.com/watch?v=spUNpyF58BY) from [3Blue1Brown](https://www.3blue1brown.com), I recommend [checking his videos out](https://www.youtube.com/c/3blue1brown) if you're interested in this topic.
 

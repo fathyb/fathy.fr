@@ -26,13 +26,23 @@ export function RouterProvider({
     children,
     ...props
 }: PropsWithChildren<BrowserRouterProps>) {
-    const [pending, startTransition] = useTransition()
-
     return (
-        <Context.Provider value={{ pending, startTransition }}>
+        <RouterProvider.Transition>
             <SuspenseRouter {...props}>{children}</SuspenseRouter>
-        </Context.Provider>
+        </RouterProvider.Transition>
     )
+}
+
+export namespace RouterProvider {
+    export function Transition({ children }: PropsWithChildren<{}>) {
+        const [pending, startTransition] = useTransition()
+
+        return (
+            <Context.Provider value={{ pending, startTransition }}>
+                {children}
+            </Context.Provider>
+        )
+    }
 }
 
 const Context = createContext<null | {

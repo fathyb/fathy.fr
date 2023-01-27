@@ -1,6 +1,9 @@
 # Forking Chrome to turn HTML into SVG
 
-> November 11th 2022
+> November 11, 2022
+
+import { LigaturesAnimation } from './ligatures-animation'
+import { CompositingAnimation } from './compositing-animation'
 
 I've been working on a program called [`html2svg`](https://github.com/fathyb/html2svg), it converts web pages to SVG. It's based on a fork of Chromium to support modern web standards. This post explains most patches.
 
@@ -11,6 +14,8 @@ I've been working on a program called [`html2svg`](https://github.com/fathyb/htm
 Chromium is built on top of Blink: an HTML engine forked from WebKit, and Skia: a 2D engine also used in Firefox and Android.
 
 Blink consumes the HTML input, and Skia produces the graphical output. The Chromium compositor (`cc`) is in between, but we'll ignore it for now.
+
+---
 
 In order to support multiple platforms and targets, Skia is built to render into a back-end: it could be its GPU renderer called Ganesh, its software rasterizer, or even a PDF file. This is how Chromium can work with or without a GPU and export web pages to PDF files with high fidelity.
 
@@ -244,8 +249,6 @@ So the `T` letter is missing from twitter.com, just the `T` letter. Hmm okay wei
 
 Step 4 is needed to support ligatures and some languages. Arabic characters for example, have to be rendered differently based on their position in a word. This is why HarfBuzz is between Blink and Skia: it shapes a string of unicode characters into a set of glyph IDs and their positions.
 
-import { LigaturesAnimation } from './ligatures-animation'
-
 <LigaturesAnimation />
 
 Take my name written in latin and arabic script, add a space between letters and the characters are rendered differently in arabic. The unicode characters do not change, but their graphical representation do.
@@ -290,8 +293,6 @@ Our back-end is SVG, it is supposed to handle text shaping already, so we need t
 ```
 
 ## Surface compositing
-
-import { CompositingAnimation } from './compositing-animation'
 
 <CompositingAnimation />
 

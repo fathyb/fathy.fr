@@ -62,8 +62,8 @@ export default ({ generator, prod = false }) => {
               ].concat(
                   prod
                       ? [
-                            new webpack.optimize.LimitChunkCountPlugin({
-                                maxChunks: 1,
+                            new webpack.optimize.MinChunkSizePlugin({
+                                minChunkSize: 512 * 1024,
                             }),
                         ]
                       : [
@@ -96,7 +96,7 @@ export default ({ generator, prod = false }) => {
         module: {
             rules: [
                 {
-                    test: /\.(mp3)|(jpg)|(png)|(gif)|(ttf)|(woff2?)$/i,
+                    test: /\.(mp3)|(mp4)|(jpg)|(png)|(gif)|(ttf)|(woff2?)$/i,
                     type: 'asset/resource',
                 },
                 {
@@ -213,11 +213,6 @@ export default ({ generator, prod = false }) => {
                                     ],
                                 ],
                             },
-                        },
-                        {
-                            loader: require.resolve(
-                                './scripts/footer-loader.js',
-                            ),
                         },
                     ],
                 },

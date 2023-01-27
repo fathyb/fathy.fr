@@ -129,7 +129,6 @@ export class Kernel<T extends KernelParameters = {}> {
             }
         }
 
-        console.log('rendering kernel')
         gl.setRenderTarget(this.target)
 
         try {

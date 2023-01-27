@@ -1,0 +1,507 @@
+<svg
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 1347 764.1508768480842"
+    width="2694"
+    height="1528.3017536961684"
+>
+  <!-- svg-source:excalidraw -->
+  
+  <defs>
+    <style class="style-fonts">
+      @font-face {
+        font-family: "Virgil";
+        src: url("https://excalidraw.com/Virgil.woff2");
+      }
+      @font-face {
+        font-family: "Cascadia";
+        src: url("https://excalidraw.com/Cascadia.woff2");
+      }
+    </style>
+  </defs>
+  <g
+        stroke-linecap="round"
+        transform="translate(730 270) rotate(0 210 60)"
+    ><path
+            d="M30 0 M30 0 C157.04 0.46, 284.43 0.31, 390 0 M30 0 C135.95 -1.31, 242.95 -1.78, 390 0 M390 0 C411.81 2.47, 420.51 6.29, 420 30 M390 0 C413.02 -4.44, 422.08 8.32, 420 30 M420 30 C419.91 45.26, 417.11 56.14, 420 90 M420 30 C420.97 50.46, 418.25 69.52, 420 90 M420 90 C419.23 111.17, 407.26 121.67, 390 120 M420 90 C421.66 111.18, 411.88 117.61, 390 120 M390 120 C256.58 125.8, 126.15 123.73, 30 120 M390 120 C248.98 122.52, 105.46 120.63, 30 120 M30 120 C8.72 119.2, -0.04 106.2, 0 90 M30 120 C6.71 119.94, -2.21 111.74, 0 90 M0 90 C0.74 66.11, -2.59 45.15, 0 30 M0 90 C0.96 76.74, -2.03 60.13, 0 30 M0 30 C0.34 9.9, 8.66 -3.41, 30 0 M0 30 C1.19 14.25, 8.86 3.42, 30 0"
+            stroke="white"
+            stroke-width="1"
+            fill="none"
+        /></g><g
+        transform="translate(861.6728068622378 289.921875) rotate(0 76.5 12)"
+    ><text
+            x="0"
+            y="20"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="20px"
+            fill="white"
+            text-anchor="start"
+            style="white-space: pre;"
+            direction="ltr"
+        >Google Chrome</text></g><g
+        stroke-linecap="round"
+        transform="translate(192.2109375 270.765625) rotate(0 200.34179687500003 58.0078125)"
+    ><path
+            d="M29 0 M29 0 C161.85 -4.09, 295.82 -5.23, 371.68 0 M29 0 C140.36 1.45, 250.69 -0.6, 371.68 0 M371.68 0 C393.64 -3.86, 402.49 8.21, 400.68 29 M371.68 0 C387.95 -2.91, 398.25 10.44, 400.68 29 M400.68 29 C401.09 48.05, 396.68 69.49, 400.68 87.01 M400.68 29 C399.31 49.65, 398.33 69.96, 400.68 87.01 M400.68 87.01 C402.13 107.38, 392.65 113.93, 371.68 116.02 M400.68 87.01 C403.64 105.48, 395.2 111.87, 371.68 116.02 M371.68 116.02 C249.1 115.04, 122.52 117.22, 29 116.02 M371.68 116.02 C246.44 111.9, 122.03 110.91, 29 116.02 M29 116.02 C6.8 115.96, -1.92 107.86, 0 87.01 M29 116.02 C12.82 119.43, -1.19 108.22, 0 87.01 M0 87.01 C-1.98 72.58, 0.34 59.52, 0 29 M0 87.01 C1.28 66.6, 0.44 44.59, 0 29 M0 29 C1.04 13.37, 8.67 2.98, 29 0 M0 29 C1.71 7.26, 7.98 -2.34, 29 0"
+            stroke="white"
+            stroke-width="1"
+            fill="none"
+        /></g><g
+        transform="translate(848.4401120382331 348.29664913910244) rotate(0 88.5 12)"
+    ><text
+            x="88.5"
+            y="20"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="20px"
+            fill="white"
+            text-anchor="middle"
+            style="white-space: pre;"
+            direction="ltr"
+        >Browser Process</text></g><g
+        stroke-linecap="round"
+        transform="translate(470 610) rotate(0 203.5 57.5)"
+    ><path
+            d="M28.75 0 M28.75 0 C129.22 1.79, 228.12 3.78, 378.25 0 M28.75 0 C156.06 2.97, 282.25 3.75, 378.25 0 M378.25 0 C394.75 -2.53, 404.89 10.26, 407 28.75 M378.25 0 C398.86 -2.45, 404.85 10.77, 407 28.75 M407 28.75 C407.86 42.35, 406.9 61.97, 407 86.25 M407 28.75 C406.94 48.2, 407.03 65.59, 407 86.25 M407 86.25 C409.57 104.66, 401.06 111.4, 378.25 115 M407 86.25 C409.99 102.58, 396.66 119.34, 378.25 115 M378.25 115 C278.1 117.02, 172.39 117.5, 28.75 115 M378.25 115 C279.45 110.66, 181.9 111.17, 28.75 115 M28.75 115 C12.32 117.97, -1.03 107.05, 0 86.25 M28.75 115 C7.54 113.04, -0.72 102.57, 0 86.25 M0 86.25 C2.08 64.62, -2.57 50.96, 0 28.75 M0 86.25 C0.9 70.99, -0.11 53.53, 0 28.75 M0 28.75 C1.49 7.49, 8.11 -2.03, 28.75 0 M0 28.75 C-3.37 12.89, 10.35 3.27, 28.75 0"
+            stroke="white"
+            stroke-width="1"
+            fill="none"
+        /></g><g
+        stroke-opacity="0.5"
+        fill-opacity="0.5"
+        stroke-linecap="round"
+        transform="translate(10 610) rotate(0 203.49999999999997 57.5)"
+    ><path
+            d="M28.75 0 M28.75 0 C113.3 2.59, 200.19 1.74, 378.25 0 M28.75 0 C101.75 3.91, 172.7 3.56, 378.25 0 M378.25 0 C395.3 0.67, 408.26 7.45, 407 28.75 M378.25 0 C395.27 1.18, 406.8 5.69, 407 28.75 M407 28.75 C408.4 48.15, 408.7 66.37, 407 86.25 M407 28.75 C408.23 47.36, 408.7 67.67, 407 86.25 M407 86.25 C410.64 101.82, 400.02 112.53, 378.25 115 M407 86.25 C406.25 109.75, 397.02 116.72, 378.25 115 M378.25 115 C245.54 111.87, 116.74 112.68, 28.75 115 M378.25 115 C305.95 115.43, 235.8 115.91, 28.75 115 M28.75 115 C8.55 116.63, -1.78 103.71, 0 86.25 M28.75 115 C8.86 112.15, 0.45 105.24, 0 86.25 M0 86.25 C-3.2 66.23, -0.69 44.19, 0 28.75 M0 86.25 C-0.8 75.4, 0.44 60.52, 0 28.75 M0 28.75 C-1.47 7.55, 6.65 2.87, 28.75 0 M0 28.75 C0.77 12.85, 6.45 3.24, 28.75 0"
+            stroke="white"
+            stroke-width="1"
+            fill="none"
+        /></g><g
+        stroke-opacity="0.5"
+        fill-opacity="0.5"
+        stroke-linecap="round"
+        transform="translate(930 610) rotate(0 203.5 57.5)"
+    ><path
+            d="M28.75 0 M28.75 0 C124.39 -1.73, 214.4 -0.36, 378.25 0 M28.75 0 C99.03 0.84, 170.36 1.88, 378.25 0 M378.25 0 C398.67 -2.13, 405.13 10.61, 407 28.75 M378.25 0 C397.21 -3.89, 409.34 11.69, 407 28.75 M407 28.75 C408.43 38.37, 408.92 54.92, 407 86.25 M407 28.75 C408.76 47.1, 409.29 64.41, 407 86.25 M407 86.25 C409.6 102.95, 396.76 118.77, 378.25 115 M407 86.25 C406.6 107.14, 400.79 117.96, 378.25 115 M378.25 115 C290.51 113.52, 201.34 111.68, 28.75 115 M378.25 115 C274.75 117.69, 169.13 117.25, 28.75 115 M28.75 115 C7.81 113.3, -0.63 102.94, 0 86.25 M28.75 115 C10.04 114.82, 2.49 107.76, 0 86.25 M0 86.25 C0.65 73.14, -2.66 63.75, 0 28.75 M0 86.25 C1.03 62.64, -0.45 40.1, 0 28.75 M0 28.75 C-2.93 12.46, 10.25 2.84, 28.75 0 M0 28.75 C-3.13 12.82, 13.01 -1.44, 28.75 0"
+            stroke="white"
+            stroke-width="1"
+            fill="none"
+        /></g><g
+        transform="translate(491.5466383381638 625.914296502428) rotate(0 182 12)"
+    ><text
+            x="0"
+            y="20"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="20px"
+            fill="white"
+            text-anchor="start"
+            style="white-space: pre;"
+            direction="ltr"
+        >Google Chrome Helper (Renderer)</text></g><g stroke-linecap="round"><g
+            transform="translate(951.9118742957429 391.2) rotate(0 -134.21471413755773 108.71608656182883)"
+        ><path
+                d="M1.84 -2.7 C-3.02 13.5, 12.34 76.16, -28.79 94.58 C-69.91 113.01, -205 87.39, -244.92 107.84 C-284.83 128.28, -264.76 199.36, -268.25 217.27 M-0.61 2.01 C-5.76 18.83, 9.41 79.66, -30.34 97.66 C-70.09 115.65, -199.41 89.57, -239.1 109.98 C-278.78 130.4, -263.51 202.56, -268.47 220.13"
+                stroke="white"
+                stroke-width="1"
+                fill="none"
+            /></g><g
+            transform="translate(951.9118742957429 391.2) rotate(0 -134.21471413755773 108.71608656182883)"
+        ><path
+                d="M-281.53 193.38 C-276.78 197.73, -274.97 207.21, -267.8 221.39 M-277.76 189.89 C-274.65 199.49, -275.1 206.06, -268.86 220.72"
+                stroke="white"
+                stroke-width="1"
+                fill="none"
+            /></g><g
+            transform="translate(951.9118742957429 391.2) rotate(0 -134.21471413755773 108.71608656182883)"
+        ><path
+                d="M-261.02 194.15 C-262.68 198.52, -267.28 207.76, -267.8 221.39 M-257.25 190.65 C-259.2 200.17, -264.7 206.55, -268.86 220.72"
+                stroke="white"
+                stroke-width="1"
+                fill="none"
+            /></g></g><mask /><g stroke-linecap="round"><g
+            transform="translate(628.274146870492 608) rotate(0 -127.43022652601434 -109.8545016936958)"
+        ><path
+                d="M1.26 -1.02 C-4.09 -17.57, 8.42 -83.18, -30.28 -101.96 C-68.97 -120.75, -193.68 -94.27, -230.89 -113.72 C-268.1 -133.18, -249.39 -201.56, -253.53 -218.69 M-1.5 -4.04 C-6.12 -20.02, 13.78 -81.58, -24.89 -99.3 C-63.56 -117.02, -195.57 -90.76, -233.5 -110.36 C-271.43 -129.96, -249.51 -199.42, -252.47 -216.89"
+                stroke="white"
+                stroke-width="1"
+                fill="none"
+            /></g><g
+            transform="translate(628.274146870492 608) rotate(0 -127.43022652601434 -109.8545016936958)"
+        ><path
+                d="M-245.53 -190.75 C-249.12 -200.66, -248.99 -207.82, -254.6 -218.76 M-243.05 -187.18 C-248.48 -197.18, -249.91 -206.41, -253.84 -216.06"
+                stroke="white"
+                stroke-width="1"
+                fill="none"
+            /></g><g
+            transform="translate(628.274146870492 608) rotate(0 -127.43022652601434 -109.8545016936958)"
+        ><path
+                d="M-266.01 -192.09 C-262.13 -201.69, -254.52 -208.36, -254.6 -218.76 M-263.53 -188.51 C-262.29 -197.73, -257.04 -206.53, -253.84 -216.06"
+                stroke="white"
+                stroke-width="1"
+                fill="none"
+            /></g></g><mask /><g
+        transform="translate(731 430) rotate(0 89 19.5)"
+    ><text
+            x="178"
+            y="15.5"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="16px"
+            fill="white"
+            text-anchor="end"
+            style="white-space: pre;"
+            direction="ltr"
+        >mouseMove(250, 250)</text><text
+            x="178"
+            y="35"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="16px"
+            fill="white"
+            text-anchor="end"
+            style="white-space: pre;"
+            direction="ltr"
+        >mouseDown(250, 250)</text></g><g
+        transform="translate(410 430) rotate(0 66 10)"
+    ><text
+            x="0"
+            y="16"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="16px"
+            fill="white"
+            text-anchor="start"
+            style="white-space: pre;"
+            direction="ltr"
+        >glBindBuffer()</text></g><g
+        transform="translate(410 450) rotate(0 61.5 10)"
+    ><text
+            x="0"
+            y="16"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="16px"
+            fill="white"
+            text-anchor="start"
+            style="white-space: pre;"
+            direction="ltr"
+        >glDrawArray()</text></g><g
+        stroke-linecap="round"
+        transform="translate(310 10) rotate(0 73 70.5)"
+    ><path
+            d="M109.02 8.55 C118.25 12.41, 127.16 20.05, 133.3 28.58 C139.44 37.1, 144.14 49.28, 145.85 59.71 C147.57 70.13, 146.85 81.24, 143.58 91.12 C140.3 101, 133.4 111.24, 126.19 118.98 C118.97 126.72, 110.17 133.7, 100.27 137.57 C90.38 141.43, 77.48 143.14, 66.8 142.17 C56.12 141.2, 44.79 136.95, 36.19 131.73 C27.58 126.52, 20.92 118.92, 15.17 110.88 C9.43 102.84, 3.55 93.68, 1.73 83.49 C-0.1 73.29, 1.67 59.83, 4.22 49.69 C6.78 39.55, 10.29 30.07, 17.07 22.66 C23.86 15.25, 35.21 9.23, 44.95 5.23 C54.69 1.24, 63.98 -2.31, 75.5 -1.3 C87.02 -0.3, 106.8 7.98, 114.07 11.27 C121.34 14.56, 119.55 17.4, 119.12 18.45 M101.44 3.91 C111.35 6.96, 121.16 15.91, 128.43 24.17 C135.7 32.44, 142.81 43.97, 145.06 53.5 C147.3 63.03, 144.07 71.6, 141.92 81.35 C139.78 91.11, 138.1 103.92, 132.18 112.05 C126.25 120.18, 115.6 124.85, 106.38 130.13 C97.15 135.41, 87.32 142.49, 76.81 143.71 C66.31 144.94, 52.98 142.23, 43.34 137.47 C33.7 132.71, 25.96 123.47, 18.98 115.14 C12 106.82, 4.79 96.73, 1.46 87.51 C-1.86 78.29, -3.17 69.26, -0.98 59.84 C1.2 50.42, 8.32 39.24, 14.58 31 C20.84 22.77, 26.97 15.73, 36.58 10.42 C46.18 5.11, 61.09 -0.33, 72.2 -0.88 C83.3 -1.42, 98.72 5.97, 103.21 7.14 C107.71 8.3, 99.87 5.28, 99.2 6.11"
+            stroke="white"
+            stroke-width="1"
+            fill="none"
+        /></g><g transform="translate(349.5 46.5) rotate(0 33.5 32)"><text
+            x="33.5"
+            y="26"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="28px"
+            fill="white"
+            text-anchor="middle"
+            style="white-space: pre;"
+            direction="ltr"
+        >👀</text><text
+            x="33.5"
+            y="58"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="28px"
+            fill="white"
+            text-anchor="middle"
+            style="white-space: pre;"
+            direction="ltr"
+        >Eyes</text></g><g
+        stroke-linecap="round"
+        transform="translate(590 10) rotate(0 73 70.5)"
+    ><path
+            d="M18.72 22.62 C24.58 14.83, 35.59 9.95, 45.3 6.33 C55.01 2.71, 66.73 0.32, 76.96 0.89 C87.19 1.47, 97.56 4.76, 106.7 9.78 C115.84 14.8, 125.72 22.75, 131.78 31.01 C137.84 39.28, 141.34 49.69, 143.06 59.37 C144.78 69.05, 144.31 79.51, 142.09 89.09 C139.87 98.66, 136.38 108.87, 129.75 116.83 C123.11 124.8, 112.1 133.01, 102.28 136.86 C92.47 140.7, 81.79 140.74, 70.84 139.91 C59.89 139.08, 46.13 136.55, 36.56 131.86 C26.99 127.18, 19.66 120.18, 13.44 111.79 C7.22 103.39, 1.04 91.69, -0.76 81.5 C-2.55 71.3, -6.4 63.52, 2.65 50.63 C11.7 37.73, 38.18 11.93, 53.56 4.12 C68.94 -3.69, 94.58 3.02, 94.93 3.77 M43.16 6.17 C52.19 1.77, 66.29 1.62, 76.32 1.55 C86.35 1.48, 94.15 1.38, 103.33 5.75 C112.51 10.12, 124.67 19.74, 131.37 27.76 C138.07 35.78, 141.33 43.39, 143.52 53.85 C145.72 64.32, 147.1 79.87, 144.55 90.55 C142.01 101.24, 134.97 110.86, 128.26 117.96 C121.54 125.05, 113.93 129.56, 104.25 133.14 C94.58 136.73, 81.31 139.07, 70.2 139.46 C59.1 139.84, 46.75 139.47, 37.61 135.45 C28.47 131.42, 21.75 123.42, 15.39 115.3 C9.02 107.17, 1.25 97.2, -0.57 86.7 C-2.39 76.2, 1.32 62.29, 4.46 52.29 C7.61 42.28, 12.26 34.47, 18.3 26.65 C24.35 18.83, 36.51 8.53, 40.73 5.34 C44.94 2.15, 42.63 6.3, 43.62 7.49"
+            stroke="white"
+            stroke-width="1"
+            fill="none"
+        /></g><g transform="translate(621.5 46.5) rotate(0 41.5 32)"><text
+            x="41.5"
+            y="26"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="28px"
+            fill="white"
+            text-anchor="middle"
+            style="white-space: pre;"
+            direction="ltr"
+        >🧠</text><text
+            x="41.5"
+            y="58"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="28px"
+            fill="white"
+            text-anchor="middle"
+            style="white-space: pre;"
+            direction="ltr"
+        >Brain</text></g><g
+        stroke-linecap="round"
+        transform="translate(869.318882426343 10) rotate(0 73 70.5)"
+    ><path
+            d="M59.78 2.04 C69.4 -0.5, 82.03 0.43, 91.94 3.1 C101.84 5.76, 111.3 11.28, 119.2 18.04 C127.1 24.81, 135.17 34.38, 139.33 43.7 C143.49 53.02, 144.63 64.13, 144.17 73.96 C143.7 83.8, 140.79 93.9, 136.53 102.7 C132.28 111.5, 126.75 120.36, 118.63 126.77 C110.5 133.18, 98.26 139.33, 87.8 141.15 C77.34 142.97, 66.49 140.63, 55.86 137.71 C45.24 134.79, 32.39 130.04, 24.06 123.6 C15.73 117.17, 10.21 108.55, 5.89 99.1 C1.57 89.65, -2.25 77.25, -1.86 66.9 C-1.48 56.55, 2.89 45.59, 8.21 37.01 C13.52 28.43, 18.15 21.66, 30.02 15.43 C41.88 9.2, 68.24 1.51, 79.37 -0.36 C90.51 -2.23, 97.32 2.99, 96.84 4.2 M32.24 14.63 C39.25 7.83, 47.57 1.06, 57.74 -0.94 C67.92 -2.94, 82.84 -0.07, 93.3 2.63 C103.77 5.33, 112.54 8.01, 120.51 15.26 C128.49 22.52, 137.05 35.93, 141.16 46.14 C145.26 56.35, 145.66 67.07, 145.15 76.52 C144.64 85.98, 143.23 94.58, 138.09 102.89 C132.94 111.2, 123.43 119.84, 114.28 126.38 C105.13 132.92, 93.33 139.79, 83.19 142.13 C73.06 144.47, 63.58 143.23, 53.45 140.42 C43.33 137.61, 30.04 132.58, 22.44 125.29 C14.84 118, 11.36 106.23, 7.86 96.69 C4.35 87.16, 1.57 78.27, 1.41 68.08 C1.25 57.9, 2 44.77, 6.89 35.59 C11.79 26.41, 26.55 16.61, 30.77 13.01 C34.99 9.42, 31.97 12.95, 32.22 14.02"
+            stroke="white"
+            stroke-width="1"
+            fill="none"
+        /></g><g
+        transform="translate(900.818882426343 46.5) rotate(0 41.5 32)"
+    ><text
+            x="41.5"
+            y="26"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="28px"
+            fill="white"
+            text-anchor="middle"
+            style="white-space: pre;"
+            direction="ltr"
+        >🤌</text><text
+            x="41.5"
+            y="58"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="28px"
+            fill="white"
+            text-anchor="middle"
+            style="white-space: pre;"
+            direction="ltr"
+        >Hands</text></g><g stroke-linecap="round"><g
+            transform="translate(935.0486609819828 149.6799425749015) rotate(0 -0.4261813352072181 57.187294683394065)"
+        ><path
+                d="M-0.54 0.82 C-0.47 19.98, -2.19 96.52, -1.93 115.57 M-4.28 -1.2 C-3.1 17.05, 2.76 91.23, 3.43 111.2"
+                stroke="white"
+                stroke-width="1"
+                fill="none"
+            /></g><g
+            transform="translate(935.0486609819828 149.6799425749015) rotate(0 -0.4261813352072181 57.187294683394065)"
+        ><path
+                d="M-7.29 80.92 C-4.12 91.07, -2.2 97.18, 1.35 113.77 M-7.16 82.42 C-4.95 93.5, -1.45 100.1, 4.9 112.48"
+                stroke="white"
+                stroke-width="1"
+                fill="none"
+            /></g><g
+            transform="translate(935.0486609819828 149.6799425749015) rotate(0 -0.4261813352072181 57.187294683394065)"
+        ><path
+                d="M13.2 79.72 C11.97 90.05, 9.48 96.41, 1.35 113.77 M13.32 81.22 C9.8 92.26, 7.54 99.2, 4.9 112.48"
+                stroke="white"
+                stroke-width="1"
+                fill="none"
+            /></g></g><mask /><g
+        transform="translate(578.8784669840671 679.8894989044489) rotate(0 82.5 12)"
+    ><text
+            x="0"
+            y="20"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="20px"
+            fill="white"
+            text-anchor="start"
+            style="white-space: pre;"
+            direction="ltr"
+        >Render Process</text></g><g stroke-linecap="round"><g
+            transform="translate(458.2949566502142 82.04691014625813) rotate(0 64.30948462329874 -1.149495066976673)"
+        ><path
+                d="M1.01 0.72 C23.08 0.02, 108.81 -2.55, 130.5 -3.02 M-1.88 -1.36 C20.09 -1.81, 106.85 -0.53, 128.88 -0.18"
+                stroke="white"
+                stroke-width="1"
+                fill="none"
+            /></g><g
+            transform="translate(458.2949566502142 82.04691014625813) rotate(0 64.30948462329874 -1.149495066976673)"
+        ><path
+                d="M101.58 11.3 C104.95 9.75, 112.83 8.54, 125.28 2.42 M100.37 10.42 C108.8 8.07, 113.08 2.74, 128.24 -0.58"
+                stroke="white"
+                stroke-width="1"
+                fill="none"
+            /></g><g
+            transform="translate(458.2949566502142 82.04691014625813) rotate(0 64.30948462329874 -1.149495066976673)"
+        ><path
+                d="M101.88 -9.22 C105.35 -6.01, 113.16 -2.47, 125.28 2.42 M100.67 -10.1 C108.96 -7.55, 113.16 -7.99, 128.24 -0.58"
+                stroke="white"
+                stroke-width="1"
+                fill="none"
+            /></g></g><mask /><g stroke-linecap="round"><g
+            transform="translate(868.3281103955014 79.37086802206923) rotate(0 -63.97348310991066 1.1776855524617709)"
+        ><path
+                d="M1.14 -1.46 C-20.33 -1.82, -106.46 -1.13, -127.83 -1.47 M-1.68 3.92 C-23.46 3.93, -108.12 2.81, -129.09 1.87"
+                stroke="white"
+                stroke-width="1"
+                fill="none"
+            /></g><g
+            transform="translate(868.3281103955014 79.37086802206923) rotate(0 -63.97348310991066 1.1776855524617709)"
+        ><path
+                d="M-29.12 11.4 C-18.38 8.78, -11.75 4.28, -1.33 -2.11 M-25.57 10.11 C-16.92 2.86, -5.44 0.11, 1.12 -3.36"
+                stroke="white"
+                stroke-width="1"
+                fill="none"
+            /></g><g
+            transform="translate(868.3281103955014 79.37086802206923) rotate(0 -63.97348310991066 1.1776855524617709)"
+        ><path
+                d="M-29.14 -9.13 C-18.28 -4.85, -11.65 -2.44, -1.33 -2.11 M-25.59 -10.41 C-16.96 -9.57, -5.48 -4.23, 1.12 -3.36"
+                stroke="white"
+                stroke-width="1"
+                fill="none"
+            /></g></g><mask /><g stroke-linecap="round"><g
+            transform="translate(382.5210329235799 270.0708617603566) rotate(0 0.5661792292823691 -60.56847381778317)"
+        ><path
+                d="M1.8 -0.53 C1.87 -20.39, 1.71 -100.73, 1.54 -120.61 M-0.67 -3.29 C-0.85 -22.76, 0.58 -99.29, 0.69 -118.34"
+                stroke="white"
+                stroke-width="1"
+                fill="none"
+            /></g><g
+            transform="translate(382.5210329235799 270.0708617603566) rotate(0 0.5661792292823691 -60.56847381778317)"
+        ><path
+                d="M9.83 -86.39 C3.91 -96.95, 1.67 -109.86, 4.46 -118.69 M9.58 -91.72 C6.19 -99.85, 3.47 -110.91, -0.74 -118.37"
+                stroke="white"
+                stroke-width="1"
+                fill="none"
+            /></g><g
+            transform="translate(382.5210329235799 270.0708617603566) rotate(0 0.5661792292823691 -60.56847381778317)"
+        ><path
+                d="M-10.69 -86.65 C-9.62 -97.39, -4.87 -110.2, 4.46 -118.69 M-10.94 -91.98 C-7.4 -100.29, -3.2 -111.25, -0.74 -118.37"
+                stroke="white"
+                stroke-width="1"
+                fill="none"
+            /></g></g><mask /><g
+        transform="translate(811 190.2076543973717) rotate(0 47 19.5)"
+    ><text
+            x="94"
+            y="15.5"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="16px"
+            fill="white"
+            text-anchor="end"
+            style="white-space: pre;"
+            direction="ltr"
+        >mechanical</text><text
+            x="94"
+            y="35"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="16px"
+            fill="white"
+            text-anchor="end"
+            style="white-space: pre;"
+            direction="ltr"
+        >energy</text></g><g
+        transform="translate(410 190) rotate(0 70.5 19.5)"
+    ><text
+            x="0"
+            y="15.5"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="16px"
+            fill="white"
+            text-anchor="start"
+            style="white-space: pre;"
+            direction="ltr"
+        >electromagnetic</text><text
+            x="0"
+            y="35"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="16px"
+            fill="white"
+            text-anchor="start"
+            style="white-space: pre;"
+            direction="ltr"
+        >energy</text></g><g
+        transform="translate(544.2040650782787 734.1508768480842) rotate(0 127.00000000000003 10)"
+    ><text
+            x="145"
+            y="16"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="16px"
+            fill="white"
+            text-anchor="end"
+            style="white-space: pre;"
+            direction="ltr"
+        >GitHub</text></g><g
+        transform="translate(31 730) rotate(0 183.5 10)"
+    ><text
+            x="380"
+            y="16"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="16px"
+            fill="white"
+            text-anchor="end"
+            style="white-space: pre;"
+            direction="ltr"
+            opacity="0.5"
+        >superintelligent ants risks - Google Search</text></g><g
+        stroke-opacity="0.5"
+        fill-opacity="0.5"
+        transform="translate(30 630) rotate(0 182 12)"
+    ><text
+            x="0"
+            y="20"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="20px"
+            fill="white"
+            text-anchor="start"
+            style="white-space: pre;"
+            direction="ltr"
+        >Google Chrome Helper (Renderer)</text></g><g
+        stroke-opacity="0.5"
+        fill-opacity="0.5"
+        transform="translate(117.33182864590333 683.9752024020208) rotate(0 82.5 12)"
+    ><text
+            x="0"
+            y="20"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="20px"
+            fill="white"
+            text-anchor="start"
+            style="white-space: pre;"
+            direction="ltr"
+        >Render Process</text></g><g
+        stroke-opacity="0.5"
+        fill-opacity="0.5"
+        transform="translate(950 630) rotate(0 182 12)"
+    ><text
+            x="0"
+            y="20"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="20px"
+            fill="white"
+            text-anchor="start"
+            style="white-space: pre;"
+            direction="ltr"
+        >Google Chrome Helper (Renderer)</text></g><g
+        stroke-opacity="0.5"
+        fill-opacity="0.5"
+        transform="translate(1037.3318286459032 683.9752024020208) rotate(0 82.5 12)"
+    ><text
+            x="0"
+            y="20"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="20px"
+            fill="white"
+            text-anchor="start"
+            style="white-space: pre;"
+            direction="ltr"
+        >Render Process</text></g><g
+        transform="translate(971 730) rotate(0 174 10)"
+    ><text
+            x="308"
+            y="16"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="16px"
+            fill="white"
+            text-anchor="end"
+            style="white-space: pre;"
+            direction="ltr"
+            opacity="0.5"
+        >diy ant farm keyboard - YouTube</text></g><g
+        transform="translate(228.90144904599777 285.03811366027253) rotate(0 153 11.999999999999986)"
+    ><text
+            x="0"
+            y="20"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="20px"
+            fill="white"
+            text-anchor="start"
+            style="white-space: pre;"
+            direction="ltr"
+        >Google Chrome Helper (GPU)</text></g><g
+        transform="translate(313.4348661962879 349.77106768080404) rotate(0 65 12)"
+    ><text
+            x="65"
+            y="20"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="20px"
+            fill="white"
+            text-anchor="middle"
+            style="white-space: pre;"
+            direction="ltr"
+        >GPU Process</text></g></svg>

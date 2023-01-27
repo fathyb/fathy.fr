@@ -1,0 +1,159 @@
+<svg
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 700 460"
+    width="1400"
+    height="920"
+>
+  <!-- svg-source:excalidraw -->
+  
+  <defs>
+    <style class="style-fonts">
+      @font-face {
+        font-family: "Virgil";
+        src: url("https://excalidraw.com/Virgil.woff2");
+      }
+      @font-face {
+        font-family: "Cascadia";
+        src: url("https://excalidraw.com/Cascadia.woff2");
+      }
+    </style>
+  </defs>
+  <g transform="translate(271 150) rotate(0 76.5 12)"><text
+            x="72.5"
+            y="19"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="20px"
+            fill="#6991de"
+            text-anchor="middle"
+            style="white-space: pre;"
+            direction="ltr"
+        >2. Get paint data</text></g><g
+        stroke-linecap="round"
+        transform="translate(10 190) rotate(0 150 40)"
+    ><path
+            d="M20 0 M20 0 C89.71 2.15, 153.08 1.8, 280 0 M20 0 C91.67 -1.12, 164.37 -2.05, 280 0 M280 0 C294.55 0.65, 297.5 9.13, 300 20 M280 0 C293.47 -0.14, 303.05 2.68, 300 20 M300 20 C300.76 30.79, 302.25 37.43, 300 60 M300 20 C300.79 30.63, 298.77 43.92, 300 60 M300 60 C298.92 70.22, 292.76 82.1, 280 80 M300 60 C303.65 76.88, 289.69 79.88, 280 80 M280 80 C182.81 82.88, 82.82 78.66, 20 80 M280 80 C180.38 83.55, 81.28 84.17, 20 80 M20 80 C5.9 77.15, -0.94 74.36, 0 60 M20 80 C4.43 78.08, -1.16 76.21, 0 60 M0 60 C1.98 48.47, 0.76 37.6, 0 20 M0 60 C-2.66 49.83, -1.77 39.76, 0 20 M0 20 C1.9 5.84, 9.15 0.14, 20 0 M0 20 C2.53 7.39, 10.02 -3.99, 20 0"
+            stroke="white"
+            stroke-width="1"
+            fill="none"
+        /></g><g transform="translate(70 210) rotate(0 89 22)"><text
+            x="89"
+            y="18"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="19.047619047619044px"
+            fill="white"
+            text-anchor="middle"
+            style="white-space: pre;"
+            direction="ltr"
+        >Renderer process</text><text
+            x="89"
+            y="40"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="19.047619047619044px"
+            fill="white"
+            text-anchor="middle"
+            style="white-space: pre;"
+            direction="ltr"
+        >(main)</text></g><g
+        stroke-linecap="round"
+        transform="translate(190 10) rotate(0 160 30)"
+    ><path
+            d="M15 0 M15 0 C84.29 0.75, 156.29 1.62, 305 0 M15 0 C124.83 1, 236.31 0.6, 305 0 M305 0 C318.64 2.81, 317.4 1.25, 320 15 M305 0 C312.23 3.8, 316.37 4.58, 320 15 M320 15 C320.01 25.12, 318.7 35.45, 320 45 M320 15 C321.48 28.32, 317.98 38.65, 320 45 M320 45 C319.81 52.11, 311.55 62.63, 305 60 M320 45 C316.75 50.86, 314.59 62.02, 305 60 M305 60 C219.22 63.56, 131.09 59.02, 15 60 M305 60 C210.32 58.49, 113.62 58.99, 15 60 M15 60 C6.58 61.62, -0.46 52.01, 0 45 M15 60 C8.78 57.52, 2.39 56.34, 0 45 M0 45 C0.8 34.47, -1.65 31.89, 0 15 M0 45 C-1.07 38.57, 1.88 31.21, 0 15 M0 15 C3.63 4.02, 4.85 0.26, 15 0 M0 15 C-2.08 1.22, 1.82 -3.35, 15 0"
+            stroke="white"
+            stroke-width="1"
+            fill="none"
+        /></g><g transform="translate(270 30) rotate(0 84 11)"><text
+            x="0"
+            y="18"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="19.047619047619044px"
+            fill="white"
+            text-anchor="start"
+            style="white-space: pre;"
+            direction="ltr"
+        >Browser process</text></g><g
+        stroke-linecap="round"
+        transform="translate(390 190) rotate(0 150 40)"
+    ><path
+            d="M20 0 M20 0 C78.65 -3.16, 135.31 0.38, 280 0 M20 0 C78.2 0.06, 139.19 -0.16, 280 0 M280 0 C290.35 3.41, 296.63 8.51, 300 20 M280 0 C294.86 0.06, 298.98 7.04, 300 20 M300 20 C297.49 27.95, 298.25 36.75, 300 60 M300 20 C299.19 30.23, 301.28 36.94, 300 60 M300 60 C303.99 70.27, 290.64 83.66, 280 80 M300 60 C302.63 75.26, 293.61 76.5, 280 80 M280 80 C214.16 78.62, 145.92 81.64, 20 80 M280 80 C221.04 79.12, 161.29 80.89, 20 80 M20 80 C2.99 83.23, -2.06 75.01, 0 60 M20 80 C9.25 77.12, 2.15 71.41, 0 60 M0 60 C-1.6 48.58, 0.85 39.11, 0 20 M0 60 C-2.43 45.5, 1.13 31.13, 0 20 M0 20 C0.78 5.54, 2.8 -1.35, 20 0 M0 20 C-0.43 9.45, 8.06 1.77, 20 0"
+            stroke="white"
+            stroke-width="1"
+            fill="none"
+        /></g><g transform="translate(450 210) rotate(0 89 22)"><text
+            x="89"
+            y="18"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="19.047619047619044px"
+            fill="white"
+            text-anchor="middle"
+            style="white-space: pre;"
+            direction="ltr"
+        >Renderer process</text><text
+            x="89"
+            y="40"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="19.047619047619044px"
+            fill="white"
+            text-anchor="middle"
+            style="white-space: pre;"
+            direction="ltr"
+        >(iframe)</text></g><g stroke-linecap="round"><g
+            transform="translate(350 70) rotate(0 -100.44018022925206 58.73093145772813)"
+        ><path
+                d="M-0.53 -0.49 C-4.38 9.45, 7.78 51.38, -22.37 61.59 C-52.52 71.8, -152.24 51.3, -181.42 60.77 C-210.6 70.24, -194.08 108.73, -197.46 118.41 M-4.26 -3.23 C-7.33 5.73, 12.71 46.19, -17.25 57.44 C-47.21 68.7, -154.26 53.75, -184 64.3 C-213.74 74.84, -193.4 111.46, -195.68 120.69"
+                stroke="#6991de"
+                stroke-width="1"
+                fill="none"
+            /></g><g
+            transform="translate(350 70) rotate(0 -100.44018022925206 58.73093145772813)"
+        ><path
+                d="M-210.63 90.91 C-202.63 100.95, -199.15 114.77, -196.53 117.75 M-211.92 95.05 C-206.17 103.54, -199.42 111.62, -193.87 118.95"
+                stroke="#6991de"
+                stroke-width="1"
+                fill="none"
+            /></g><g
+            transform="translate(350 70) rotate(0 -100.44018022925206 58.73093145772813)"
+        ><path
+                d="M-190.33 87.93 C-188.93 98.87, -192.09 113.66, -196.53 117.75 M-191.62 92.07 C-191.78 101.45, -190.99 110.41, -193.87 118.95"
+                stroke="#6991de"
+                stroke-width="1"
+                fill="none"
+            /></g></g><mask /><g stroke-linecap="round"><g
+            transform="translate(350 70) rotate(0 90.31375547051425 60.208108824938535)"
+        ><path
+                d="M-2.04 -0.54 C1.63 9.17, -4.71 49.77, 22.53 59.7 C49.76 69.63, 134.69 48.86, 161.38 59.03 C188.07 69.2, 179.95 110.27, 182.67 120.72 M2.05 -3.31 C5.53 6.74, -4.72 52.34, 21.66 63.16 C48.04 73.98, 134.59 51.52, 160.32 61.62 C186.06 71.71, 172.51 113.38, 176.06 123.72"
+                stroke="#6991de"
+                stroke-width="1"
+                fill="none"
+            /></g><g
+            transform="translate(350 70) rotate(0 90.31375547051425 60.208108824938535)"
+        ><path
+                d="M164.85 99.2 C168.79 106.66, 171.16 117.44, 177.09 120.4 M164.36 96.07 C168.82 104.92, 175.31 116.25, 175.53 124.07"
+                stroke="#6991de"
+                stroke-width="1"
+                fill="none"
+            /></g><g
+            transform="translate(350 70) rotate(0 90.31375547051425 60.208108824938535)"
+        ><path
+                d="M185.37 99.08 C182.79 106.28, 178.63 117.1, 177.09 120.4 M184.88 95.94 C181.88 105.24, 180.92 116.62, 175.53 124.07"
+                stroke="#6991de"
+                stroke-width="1"
+                fill="none"
+            /></g></g><mask /><g
+        stroke-linecap="round"
+        transform="translate(190 390) rotate(0 160 30)"
+    ><path
+            d="M15 0 M15 0 C109.41 -1.4, 208.81 -1.93, 305 0 M15 0 C95.9 1.71, 173.44 1.69, 305 0 M305 0 C315.89 -1.43, 316.25 7.9, 320 15 M305 0 C311.18 3.37, 319.03 3.75, 320 15 M320 15 C321.88 18.71, 316.6 29.55, 320 45 M320 15 C320.81 21.41, 321.35 32.53, 320 45 M320 45 C323.11 57.61, 313.78 63.18, 305 60 M320 45 C322.99 51.3, 311.8 61.12, 305 60 M305 60 C246.72 61.82, 182.17 61.54, 15 60 M305 60 C211.24 63.77, 118.79 64.12, 15 60 M15 60 C1.2 59.18, 0.79 51.84, 0 45 M15 60 C6.34 61.51, 4.21 56.68, 0 45 M0 45 C1.69 39.49, 3.52 24.39, 0 15 M0 45 C-1.91 34.28, -1.82 25.72, 0 15 M0 15 C-0.23 4.81, 3.08 -1.76, 15 0 M0 15 C-1.88 4.64, 1.17 -1.91, 15 0"
+            stroke="white"
+            stroke-width="1"
+            fill="none"
+        /></g><g transform="translate(290 410) rotate(0 61.5 11)"><text
+            x="0"
+            y="18"
+            font-family="Cascadia, Segoe UI Emoji"
+            font-size="19.047619047619044px"
+            fill="white"
+            text-anchor="start"
+            style="white-space: pre;"
+            direction="ltr"
+        >GPU process</text></g></svg>

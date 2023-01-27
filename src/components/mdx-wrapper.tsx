@@ -1,3 +1,4 @@
+import cx from 'clsx'
 import LinkIcon from '@mui/icons-material/Link'
 import useStyles from 'isomorphic-style-loader/useStyles'
 import atomDarkTheme from 'prism-themes/themes/prism-atom-dark.css'
@@ -8,9 +9,10 @@ import { MDXComponents } from 'mdx/types'
 import { Box, BoxProps, lighten, useTheme } from '@mui/material'
 import { useEffect, useRef, PropsWithChildren, Fragment } from 'react'
 
+import { useScrollListener } from '../hooks/use-scroll-listener'
+
 import { Link } from './link'
 import { Sidebar } from './sidebar'
-import { useScrollListener } from '../hooks/use-scroll-listener'
 
 export function MDXWrapper({
     children,
@@ -40,6 +42,21 @@ export function MDXWrapper({
 }
 
 const components: MDXComponents = {
+    hr: () => (
+        <Box
+            component="hr"
+            sx={{
+                clear: 'both',
+                border: 'none',
+                margin: 0,
+
+                '&:first-of-type': {
+                    clear: 'none',
+                    display: 'none',
+                },
+            }}
+        />
+    ),
     h1: ({ id, children }) => (
         <MDXHeader type="h1" id={id}>
             {children}
@@ -71,7 +88,13 @@ const components: MDXComponents = {
         </MDXHeader>
     ),
     a: ({ href = '/', children }) => (
-        <Link to={href.startsWith('.') ? href.replace(/.mdx$/, '') : href}>
+        <Link
+            to={
+                href.startsWith('.')
+                    ? href.replace(/\/index.mdx$/, '').replace(/.mdx$/, '')
+                    : href
+            }
+        >
             {children}
         </Link>
     ),
@@ -91,13 +114,13 @@ const components: MDXComponents = {
         <a
             href={src}
             target="_blank"
-            className={[
+            className={cx(
                 'img-link',
                 className,
                 align ? ` align-${align}` : '',
-            ].join(' ')}
+            )}
         >
-            <img src={src} alt={alt} loading="lazy" />
+            <img src={src} alt={alt} />
         </a>
     ),
     pre: ({
@@ -106,71 +129,115 @@ const components: MDXComponents = {
         ...props
     }: JSX.IntrinsicElements['pre'] & { meta?: string }) => {
         const theme = useTheme()
-        const chrome = meta?.match(/^chromium\/(.*)#(.*)@(.*)$/)
+        let link: null | RegExpMatchArray = null
+        const options: Record<string, string> = {}
 
-        if (chrome) {
-            const [, name, line, rev] = chrome
+        if (meta) {
+            for (const arg of meta.split(',')) {
+                const match = arg.match(/^([^\/]*)\/(.*)#(.*)@(.*)$/)
+
+                if (match) {
+                    link = match
+                } else {
+                    const [key, value] = arg.split('=')
+
+                    if (key && value) {
+                        options[key] = value
+                    }
+                }
+            }
+        }
+
+        const className = options.align ? `align-${options.align}` : undefined
+
+        if (link) {
+            const [, project, name, line, rev] = link
             const [lineStart] = line.split('-')
 
             return (
-                <>
-                    <Box
-                        mx={1}
-                        sx={{
-                            code: {
-                                fontSize: theme.typography.body2.fontSize,
-                            },
-                        }}
-                    >
-                        {`chromium/${name}`
-                            .split('/')
-                            .map((chunk, index, array) => {
-                                const path = array.slice(1, index + 1).join('/')
-                                const last = index === array.length - 1
-                                const slash = last ? null : (
-                                    <Box
-                                        mx={1}
-                                        component="code"
-                                        sx={{
-                                            color: `${theme.palette.text.secondary} !important`,
-                                        }}
-                                    >
-                                        /
-                                    </Box>
-                                )
-                                const url = last
-                                    ? `${path};l=${line}`
-                                    : path
-                                    ? `${path}/`
-                                    : ''
-
-                                return (
-                                    <Fragment key={index}>
-                                        <Link
-                                            to={`https://source.chromium.org/chromium/chromium/src/+/main:${url};drc=${rev}`}
+                <Box className={className} sx={{ overflow: 'auto' }}>
+                    <Box width="fit-content">
+                        <Box
+                            mx={1}
+                            sx={{
+                                code: {
+                                    fontSize: theme.typography.body2.fontSize,
+                                },
+                            }}
+                        >
+                            {`${project}/${name}`
+                                .split('/')
+                                .map((chunk, index, array) => {
+                                    const path = array
+                                        .slice(1, index + 1)
+                                        .join('/')
+                                    const last = index === array.length - 1
+                                    const slash = last ? null : (
+                                        <Box
+                                            mx={1}
+                                            component="code"
+                                            sx={{
+                                                color: `${theme.palette.text.secondary} !important`,
+                                            }}
                                         >
-                                            <code>{chunk}</code>
-                                        </Link>
-                                        {slash}
-                                    </Fragment>
-                                )
-                            })}
+                                            /
+                                        </Box>
+                                    )
+                                    const url = last
+                                        ? project === 'chromium'
+                                            ? `${path};l=${line}`
+                                            : `${path}#${line
+                                                  .split('-')
+                                                  .map((x) => 'L' + x)
+                                                  .join('-')}`
+                                        : path
+                                        ? `${path}/`
+                                        : ''
 
-                        <Box ml={1} component="code">
-                            line {lineStart}
+                                    return (
+                                        <Fragment key={index}>
+                                            <Link
+                                                to={
+                                                    project === 'chromium'
+                                                        ? `https://source.chromium.org/chromium/chromium/src/+/main:${url};drc=${rev}`
+                                                        : url
+                                                        ? `https://github.com/fathyb/${project}/blob/${rev}/${url}`
+                                                        : `https://github.com/fathyb/${project}/tree/${rev}`
+                                                }
+                                            >
+                                                <code>{chunk}</code>
+                                            </Link>
+                                            {slash}
+                                        </Fragment>
+                                    )
+                                })}
+
+                            {lineStart === '1' ? null : (
+                                <Box ml={1} component="code">
+                                    line {lineStart}
+                                </Box>
+                            )}
+                        </Box>
+                        <Box
+                            component="pre"
+                            className={props.className}
+                            sx={{ paddingTop: '0 !important' }}
+                        >
+                            {children}
                         </Box>
                     </Box>
-                    <Box
-                        component="pre"
-                        className={props.className}
-                        sx={{ paddingTop: '0 !important' }}
-                    >
-                        {children}
-                    </Box>
-                </>
+                </Box>
             )
         } else {
-            return <pre {...props}>{children}</pre>
+            return (
+                <Box
+                    component="pre"
+                    className={cx(className, props.className)}
+                    sx={{ overflow: 'auto' }}
+                >
+                    {children}
+                </Box>
+            )
         }
     },
 }
@@ -184,6 +251,10 @@ function MDXHeader({
     type: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 }>) {
     const theme = useTheme()
+
+    if (type == 'h4') {
+        return <h4 id={id}>{children}</h4>
+    }
 
     return (
         <Box id={id} component={type}>
@@ -207,14 +278,7 @@ function MDXHeader({
                     },
 
                     svg: {
-                        mt:
-                            type === 'h2'
-                                ? '4px'
-                                : type === 'h3'
-                                ? '6px'
-                                : type === 'h4'
-                                ? '7px'
-                                : 0,
+                        mt: type === 'h2' ? '4px' : type === 'h3' ? '6px' : 0,
                         mb: type === 'h1' ? '4px' : 0,
                     },
                 }}
@@ -306,6 +370,19 @@ const useClasses = makeStyles()((theme) => ({
             },
         },
 
+        figure: {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'space-around',
+        },
+        figcaption: {
+            color: theme.palette.text.secondary,
+            fontSize: theme.typography.caption.fontSize,
+            textAlign: 'center',
+            marginTop: theme.spacing(1),
+        },
+
         '& .toc-wrapper': {
             '.hide-footer &': {
                 display: 'none',
@@ -376,7 +453,9 @@ const useClasses = makeStyles()((theme) => ({
                 },
             },
         },
-
+        video: {
+            maxWidth: '100%',
+        },
         '& h1, & h2, & h3, & h4, & h5, & h6': {
             clear: 'both',
             color: theme.palette.grey[200],
@@ -393,22 +472,21 @@ const useClasses = makeStyles()((theme) => ({
         '& code, & ol, & ul, & strong, & span.math': {
             color: lighten(theme.palette.text.primary, 0.35),
         },
-        '&>:not(.toc-wrapper, .mdx-footer) a, &>a, &>:not(.toc-wrapper, .mdx-footer) a *, &>a *':
+        '&>:not(.toc-wrapper, footer) a, &>a, &>:not(.toc-wrapper, footer) a *, &>a *':
             {
                 color: `${theme.palette.primary.main} !important`,
             },
-        '&>:not(.toc-wrapper, .mdx-footer) p, &>p': {
+        '&>:not(.toc-wrapper, footer) p, &>p': {
             marginTop: `${theme.spacing(3)} !important`,
             marginBottom: `${theme.spacing(3)} !important`,
         },
-        '&>:not(.toc-wrapper, .mdx-footer, h1, h2, h3, h4, h5, h6) svg, &>svg':
-            {
-                height: 'auto',
-                margin: 'auto',
-                display: 'block',
-                maxWidth: '100%',
-                marginBottom: theme.spacing(4),
-            },
+        '&>:not(.toc-wrapper, footer, h1, h2, h3, h4, h5, h6) svg, &>svg': {
+            height: 'auto',
+            margin: 'auto',
+            display: 'block',
+            maxWidth: '100%',
+            marginBottom: theme.spacing(4),
+        },
         '& .align-left, & .align-right': {
             [`@media (min-width: ${theme.spacing(125)})`]: {
                 width: '45%',
@@ -423,7 +501,7 @@ const useClasses = makeStyles()((theme) => ({
                 },
             },
         },
-        '&>:not(.toc-wrapper, .mdx-footer) pre, &>pre': {
+        '&>:not(.toc-wrapper, footer) pre, &>pre': {
             padding: `${theme.spacing(1)} !important`,
             fontSize: '0.85rem',
             background: 'transparent !important',
@@ -440,10 +518,10 @@ const useClasses = makeStyles()((theme) => ({
                 padding: '0 !important',
             },
         },
-        '.mdx-footer': {
+        footer: {
             display: 'none',
         },
-        '&>.mdx-footer': {
+        '&>footer': {
             '.show-footer &': {
                 display: 'flex',
                 flexDirection: 'row',

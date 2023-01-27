@@ -21,5 +21,9 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true
     },
-    "include": ["src/**/*.ts", "src/**/*.tsx"]
+    "include": ["src/**/*.ts", "src/**/*.tsx"],
+
+    "mdx": {
+        "plugins": ["remark-gfm"]
+    }
 }

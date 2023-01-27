@@ -273,9 +273,6 @@ function animate(time: number, rewind: boolean | number) {
     }
 }
 
-console.log('hot', hsl('#ff2e69'))
-console.log('cold', hsl('#0ffbff'))
-
 function hsl(color: string) {
     const [r, g, b] = new Color(color).toArray()
     const min = Math.min(r, g, b)

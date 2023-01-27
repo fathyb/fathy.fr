@@ -22,12 +22,13 @@ export function findWindingCenter({
     animateWinding = 10,
     windingFrequency = 0,
 }): WindingCenter {
+    const bound = timeSamples - 1
     const curve = new Float64Array(timeSamples)
     const xBuffer = new Float64Array(timeSamples)
     const yBuffer = new Float64Array(timeSamples)
 
     for (let i = 0; i < timeSamples; i++) {
-        curve[i] = (g(i * curveIndex - piHalf) + 1) / 2 + 0
+        curve[i] = g(i * curveIndex + piHalf)
     }
 
     for (let x = 0; x < timeSamples; x++) {
@@ -53,7 +54,7 @@ export function findWindingCenter({
 
                 centerX += value * Math.cos(radians)
                 centerY += value * Math.sin(radians)
-                divider += value
+                divider += 1
             }
         }
 
@@ -69,20 +70,18 @@ export function findWindingCenter({
     }
 
     function get(time: number): Point {
-        return [interpolate(xBuffer, time), interpolate(yBuffer, time)]
-    }
-
-    function interpolate(buffer: Float64Array, x: number) {
-        const bound = timeSamples - 1
-        const p = Math.abs(x % 1) * bound
+        const p = Math.abs(time % 1) * bound
         const i = Math.ceil(p)
 
         if (i >= bound - 1) {
-            return buffer[i]
+            return [xBuffer[i], yBuffer[i]]
         } else {
             const d = p % 1.0
 
-            return buffer[i] * (1 - d) + buffer[i + 1] * d
+            return [
+                xBuffer[i] * (1 - d) + xBuffer[i + 1] * d,
+                yBuffer[i] * (1 - d) + yBuffer[i + 1] * d,
+            ]
         }
     }
 }

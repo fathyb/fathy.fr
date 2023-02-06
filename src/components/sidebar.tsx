@@ -38,9 +38,6 @@ export function Sidebar({ children }: PropsWithChildren<{}>) {
                         <Typography component="span" variant="h5">
                             Fathy
                         </Typography>
-                        <Typography component="span" variant="caption">
-                            [ available for hire ]
-                        </Typography>
                     </Box>
                 </Box>
             </Link>
